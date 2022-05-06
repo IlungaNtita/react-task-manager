@@ -34,19 +34,15 @@ import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 
 function Tasks() {
-
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mt={6} mb={3}>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={12}>
-            <Card>
               <DndProvider backend={HTML5Backend}>
                 <Homepage />
               </DndProvider>
-            </Card>
           </Grid>
         </Grid>
       </MDBox>

@@ -3,6 +3,8 @@ import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../../data/types";
 import StopWatch from "./StopWatch";
+import Card from '@mui/material/Card';
+import MDTypography from "components/MDTypography";
 
 const Item = ({ item, index, moveItem, status }) => {
     const ref = useRef(null);
@@ -55,17 +57,23 @@ const Item = ({ item, index, moveItem, status }) => {
 
     return (
         <Fragment>
-            <div
+            <Card
                 ref={ref}
                 style={{ opacity: isDragging ? 0 : 1 }}
                 className={"item"}
                 onClick={onOpen}
             >
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-                <p className={"item-title"}>{item.content}</p>
-                <p className={"item-status"}>{item.icon}</p>
+                <br />
+                <MDTypography sx={{ fontSize: 16 }}  gutterBottom>
+                    {item.content}
+                </MDTypography>
+                <MDTypography sx={{ fontSize: 14 }} gutterBottom>
+                    {item.icon}
+                </MDTypography>
+                
                 <StopWatch/>
-            </div>
+            </Card>
             <Window
                 item={item}
                 onClose={onClose}

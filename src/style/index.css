@@ -1,14 +1,6 @@
-:root {
-  --primary-color: rgb(62, 100, 255);
-  --complete-color: #27aa80;
-  --text-color: #172b4d;
-  --disabled-color: #fad6d6;
-  --background-color: #f5eaea;
-}
-
-html {
+.box {
   background: rgb(0, 73, 191);
-  background: linear-gradient(90deg, rgba(0, 73, 191, 1) 0%, rgba(190, 190, 255, 1) 46%, rgba(0, 212, 255, 1) 100%);
+  background: linear-gradient(90deg, rgba(190, 190, 255, 1) 20%, rgba(14, 90, 166, 0.577) 100%);
 }
 
 body {
@@ -133,7 +125,9 @@ select {
 }
 
 .highlight-region {
-  background-color: rgb(186, 255, 186);
+  background-color: rgba(255, 239, 66, 0.658);
+  border-radius: 12px;
+
 }
 
 .page-header {
@@ -193,4 +187,54 @@ select {
   margin: 10px auto;
   color: rgb(23, 18, 18);
   padding: 10px;
+}
+
+/* From uiverse.io by @Ali-Tahmazi99 */
+.loader {
+  width: 65px;
+  height: 65px;
+  border: 8px solid #ee9b00a6;
+  border-radius: 50px;
+  position: relative;
+}
+
+.loader span {
+  display: block;
+  background: #ee9b00;
+}
+
+.loader .hour,
+.loader .min {
+  width: 6px;
+  height: 22px;
+  border-radius: 50px;
+  position: absolute;
+  top: 24.5px;
+  left: 21px;
+  animation: load9243 1.2s linear infinite;
+  transform-origin: top center;
+}
+
+.loader .min {
+  height: 17px;
+  animation: load9243 4s linear infinite;
+}
+
+.loader .circel {
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  position: absolute;
+  top: 19px;
+  left: 19px;
+}
+
+@keyframes load9243 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

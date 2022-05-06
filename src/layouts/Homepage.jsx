@@ -3,6 +3,7 @@ import DropWrapper from "../components/kanban/DropWrapper";
 import Col from "../components/kanban/Col";
 import { data, statuses } from "../data";
 import { useState } from "react";
+import Card from "@mui/material/Card";
 
 const Homepage = props => {
     const [items, setItems] = useState(data)
@@ -30,7 +31,7 @@ const Homepage = props => {
         <div className="row">
             {statuses.map(s => {
                 return (
-                    <div key={s.status} className="col-wrapper">
+                    <div key={s.status} style={{ width:300 }} className="ml-3">
                         <h2 className="col-header">{s.status.toUpperCase()}</h2>
                         <DropWrapper onDrop={onDrop} status={s.status}>
                             <Col>
@@ -39,7 +40,7 @@ const Homepage = props => {
                                 .map((i, idx) => <Item key={i.id} item={i} index={idx} moveItem={moveItem} status={s}/>)}
                             </Col>
                         </DropWrapper>
-                    </div>
+                    </div>                    
                 )
             })}
         </div>
