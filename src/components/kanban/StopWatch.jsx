@@ -44,22 +44,30 @@ const StopWatch = ({ theme }) => {
 
 	return (
 		<div className="app">
-		<h3>React Stopwatch</h3>
-		<div className='stopwatch-card'>
-			<p id='timedate'>{formatTime()}</p>
+			{/* <div class="loader">
+				<span class="hour"></span>
+				<span class="min"></span>
+				<span class="circel"></span>
+			</div> */}
 			
-			<div className='buttons'>
-          {
-            !isActive && !isPaused ?
-              <button onClick={handleStart}>Start</button>
-              : (
-                isPaused ? <button onClick={handlePause}>Pause</button> :
-                  <button onClick={handleResume}>Resume</button>
-              )
-          }
-          <button onClick={handleReset} disabled={!isActive}>Reset</button>
-        </div>
-		</div>
+			<div class="loader-3">
+				<div class="circle"></div>
+			</div>
+			<div className='stopwatch-card'>
+				<p id='timedate'>{formatTime()}</p>
+				
+				<div className='buttons'>
+					{
+						!isActive && !isPaused ?
+						<button onClick={handleStart}>Start</button>
+						: (
+							isPaused ? <button onClick={handlePause}>Pause</button> :
+							<button onClick={handleResume}>Resume</button>
+						)
+					}
+					<button onClick={handleReset} disabled={!isActive}>Reset</button>
+				</div>
+			</div>
 		</div>
 	);
 }
