@@ -2,28 +2,28 @@ const data = [
     {
         id: 1,
         icon: "⭕️",
-        status: "open",
+        status: "To Do",
         title: "Human Interest Form",
         content: "Fill out human interest distribution form",
-        time: 0
+        time: 100
     }, {
         id: 2,
         icon: "⭕️",
-        status: "open",
+        status: "To Do",
         title: "Purchase present",
         content: "Get an anniversary gift",
         time: 0
     }, {
         id: 3,
         icon: "⭕️",
-        status: "open",
+        status: "To Do",
         title: "Invest in investments",
         content: "Call the bank to talk about investments",
         time: 0
     }, {
         id: 4,
         icon: "⭕️",
-        status: "open",
+        status: "To Do",
         title: "Daily reading",
         content: "Finish reading Intro to UI/UX",
         time: 0
@@ -31,17 +31,17 @@ const data = [
 ];
 
 const statuses = [{
-    status: "open",
+    status: "To Do",
     icon: "⭕️",
     color: "#00C2E0"
 }, {
-    status: "in progress",
+    status: "In Progress",
     icon: "⏱️",
     color: "#EB5A46"
 }, {
-    status: "done",
+    status: "Done",
     icon: "✅",
-    color: "#3981DE"
+    color: "rgb(68, 163, 94)"
 }];
 
 

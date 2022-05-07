@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react'
 import { useEffect } from 'react'
+import formatTime from 'utils/formatTime'
 
 const StopWatch = ({ theme, setTasks, tasks, item }) => {
-	const [timer, setTimer] = useState(0)
+	const [timer, setTimer] = useState(item.time)
 	const [isActive, setIsActive] = useState(false)
 	const [isPaused, setIsPaused] = useState(false)
 	const countRef = useRef(null)
@@ -10,9 +11,11 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 	const handleStart = () => {
 		setIsActive(true)
 		setIsPaused(true)
-		countRef.current = setInterval(() => {
-			setTimer((timer) => timer + 1)
-		}, 1000)
+		if(item.status === "In Progress"){
+			countRef.current = setInterval(() => {
+				setTimer((timer) => timer + 1)
+			}, 1000)
+		}
 	}
 
 	const handlePause = () => {
@@ -34,28 +37,42 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 		setTimer(0)
 	}
 
-	const formatTime = (timer) => {
-		const getSeconds = `0${(timer % 60)}`.slice(-2)
-		const minutes = `${Math.floor(timer / 60)}`
-		const getMinutes = `0${minutes % 60}`.slice(-2)
-		const getHours = `0${Math.floor(timer / 3600)}`.slice(-2)
-
-		return `${getHours} : ${getMinutes} : ${getSeconds}`
-	}
+	
 
 	useEffect(() => {
     	// Update the state with this data
-		console.log(timer, item)
+		console.log(timer)
 		if(item && item.id)	{
-			console.log("ID is:",item.id )
-			item.time = timer
+			if(timer >= 1 ){
+				console.log("ID is:",item.id, "time:", timer )
+				item.time = timer
+			}
 		}
   	});
+	
+	useEffect(() => {
+    	// pause timer
+		if(item && item.status === "Done")	{
+			console.log("status is Done:", item.time, "time:", timer )
+			handlePause()
+		}
+  	}, []);
+
+	useEffect(() => {
+    	// Start the timer and save timer to the respective item
+		if(item && item.status === "In Progress")	{
+			console.log("status is In Progress:", item.time )
+			handleStart()
+		}
+		if(timer >= 60)	{
+			item.time = timer
+			handleStart()
+		}
+  	}, []);
 
 	return (
 		<div className="app">
 			<div className='stopwatch-card'>
-				{/* {!item.id !== undefined ? <p id='timedate'>{formatTime()} {item.id}</p> : <p id='timedate'>{formatTime()}</p>} */}
 				<p id='timedate'>{formatTime(timer)}</p>
 				<div className='buttons'>
 					{

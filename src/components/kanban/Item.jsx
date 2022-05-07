@@ -54,7 +54,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-
+    
     return (
         <Fragment>
             <Card
@@ -71,42 +71,18 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                 <MDTypography sx={{ fontSize: 14 }} gutterBottom>
                     {item.icon}
                 </MDTypography>
-                <div class="loader-3">
+                {/* <div class="loader-3">
                     <div class="circle"></div>
-                </div>
-                <StopWatch item={item} tasks={tasks} setTasks={setTasks}/>
+                </div> */}
+                <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
             </Card>
             <Window
                 item={item}
                 onClose={onClose}
                 show={show}
+                key={item.time}
             />
         </Fragment>
-        // {! item.id ?
-        //         <Box sx={style}>
-        //             <div className={"close-btn-ctn"}>
-        //                 <MDTypography style={{ flex: "1 90%" }} variant="h2" fontWeight="large" display="block" color="text" >{item.title}</MDTypography>
-        //                 <button className="close-btn" onClick={onClose}><CloseIcon /></button>
-        //             </div>
-        //             <br />
-        //             <div>
-        //                 <MDTypography variant="h3" fontWeight="large" display="block" color="text" >Description</MDTypography>
-        //                     <MDTypography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        //                         {item.content}
-        //                     </MDTypography>
-        //                 <MDTypography variant="h3" fontWeight="large" display="block" color="text" >Status</MDTypography>
-        //                     <MDTypography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        //                         {item.icon} {`${item.status.charAt(0).toUpperCase()}${item.status.slice(1)}`}
-        //                     </MDTypography>
-        //                 <MDTypography variant="h3" fontWeight="large" display="block" color="text" >
-        //                     Time
-        //                 </MDTypography>
-        //                 <StopWatch/>
-        //             </div>
-        //         </Box>
-        //         :
-        //         <p>Loading..</p>
-        //     }
     );
 };
 

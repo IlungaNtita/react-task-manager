@@ -1,4 +1,7 @@
 import React from "react";
+import { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
 // import Modal from "react-modal";
 import MDButton from "components/MDButton";
 import StopWatch from "./StopWatch";
@@ -9,6 +12,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import formatTime from 'utils/formatTime'
 
 const style = {
   position: 'absolute',
@@ -23,8 +27,24 @@ const style = {
 };
 
 const Window = ({ show, onClose, item }) => {
+    const [itemTimer, setItemTimer] = useState(item.time)
+    const countRef = useRef(null)
+
+    useEffect(() => {
+    	// Update the state with this data
+		if(item && item.id)	{
+			console.log("ID is:",item.id )
+			handleStart()
+		}
+  	}, []);
+
+    const handleStart = () => {
+		countRef.current = setInterval(() => {
+			setItemTimer((itemTimer) => itemTimer + 1)
+		}, 1000)
+	}
+
     return (
-        <div>
         <Modal
             open={show}
             onClose={onClose}
@@ -49,17 +69,16 @@ const Window = ({ show, onClose, item }) => {
                  <MDTypography variant="h3" fontWeight="large" display="block" color="text" >
                      Time
                  </MDTypography>
-                 <div class="loader">
-                    <span class="hour"></span>
-                    <span class="min"></span>
-                    <span class="circel"></span>
-                </div>
-                 <StopWatch/>
+                 <div className="loader" style={{left:"130px", }}>
+                    <span className="hour"></span>
+                    <span className="min"></span>
+                    <span className="circel"></span>
+                 </div>
+
+                 <div style={{left:"130px"}}><p>{formatTime(itemTimer)}</p></div>
              </div>
             </Box>
         </Modal>
-        </div>
-
     );
 };
 
