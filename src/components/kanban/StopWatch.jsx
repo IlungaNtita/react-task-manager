@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
+import { useEffect } from 'react'
 
-const StopWatch = ({ theme }) => {
+const StopWatch = ({ theme, setTasks, tasks, item }) => {
 	const [timer, setTimer] = useState(0)
 	const [isActive, setIsActive] = useState(false)
 	const [isPaused, setIsPaused] = useState(false)
@@ -33,7 +34,7 @@ const StopWatch = ({ theme }) => {
 		setTimer(0)
 	}
 
-	const formatTime = () => {
+	const formatTime = (timer) => {
 		const getSeconds = `0${(timer % 60)}`.slice(-2)
 		const minutes = `${Math.floor(timer / 60)}`
 		const getMinutes = `0${minutes % 60}`.slice(-2)
@@ -42,20 +43,20 @@ const StopWatch = ({ theme }) => {
 		return `${getHours} : ${getMinutes} : ${getSeconds}`
 	}
 
+	useEffect(() => {
+    	// Update the state with this data
+		console.log(timer, item)
+		if(item && item.id)	{
+			console.log("ID is:",item.id )
+			item.time = timer
+		}
+  	});
+
 	return (
 		<div className="app">
-			{/* <div class="loader">
-				<span class="hour"></span>
-				<span class="min"></span>
-				<span class="circel"></span>
-			</div> */}
-			
-			<div class="loader-3">
-				<div class="circle"></div>
-			</div>
 			<div className='stopwatch-card'>
-				<p id='timedate'>{formatTime()}</p>
-				
+				{/* {!item.id !== undefined ? <p id='timedate'>{formatTime()} {item.id}</p> : <p id='timedate'>{formatTime()}</p>} */}
+				<p id='timedate'>{formatTime(timer)}</p>
 				<div className='buttons'>
 					{
 						!isActive && !isPaused ?

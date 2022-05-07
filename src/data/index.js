@@ -4,36 +4,40 @@ const data = [
         icon: "⭕️",
         status: "open",
         title: "Human Interest Form",
-        content: "Fill out human interest distribution form"
+        content: "Fill out human interest distribution form",
+        time: 0
     }, {
         id: 2,
         icon: "⭕️",
         status: "open",
         title: "Purchase present",
-        content: "Get an anniversary gift"
+        content: "Get an anniversary gift",
+        time: 0
     }, {
         id: 3,
         icon: "⭕️",
         status: "open",
         title: "Invest in investments",
-        content: "Call the bank to talk about investments"
+        content: "Call the bank to talk about investments",
+        time: 0
     }, {
         id: 4,
         icon: "⭕️",
         status: "open",
         title: "Daily reading",
-        content: "Finish reading Intro to UI/UX"
+        content: "Finish reading Intro to UI/UX",
+        time: 0
     }
 ];
 
 const statuses = [{
     status: "open",
     icon: "⭕️",
-    color: "#EB5A46"
+    color: "#00C2E0"
 }, {
     status: "in progress",
-    icon: "🔆️",
-    color: "#00C2E0"
+    icon: "⏱️",
+    color: "#EB5A46"
 }, {
     status: "done",
     icon: "✅",

@@ -49,38 +49,17 @@ const Window = ({ show, onClose, item }) => {
                  <MDTypography variant="h3" fontWeight="large" display="block" color="text" >
                      Time
                  </MDTypography>
+                 <div class="loader">
+                    <span class="hour"></span>
+                    <span class="min"></span>
+                    <span class="circel"></span>
+                </div>
                  <StopWatch/>
              </div>
             </Box>
         </Modal>
         </div>
-        // <Modal
-        //     isOpen={show}
-        //     onRequestClose={onClose}
-        //     className={"modal"}
-        //     overlayClassName={"overlay"}
-        // >
-            
-        //     <div className={"close-btn-ctn"}>
-        //         <MDTypography style={{ flex: "1 90%" }} variant="h2" fontWeight="large" display="block" color="text" >{item.title}</MDTypography>
-        //         <button className="close-btn" onClick={onClose}><CloseIcon /></button>
-        //     </div>
-        //     <br />
-        //     <div>
-        //         <MDTypography variant="h3" fontWeight="large" display="block" color="text" >Description</MDTypography>
-        //             <MDTypography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        //                 {item.content}
-        //             </MDTypography>
-        //         <MDTypography variant="h3" fontWeight="large" display="block" color="text" >Status</MDTypography>
-        //             <MDTypography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        //                 {item.icon} {`${item.status.charAt(0).toUpperCase()}${item.status.slice(1)}`}
-        //             </MDTypography>
-        //         <MDTypography variant="h3" fontWeight="large" display="block" color="text" >
-        //             Time
-        //         </MDTypography>
-        //         <StopWatch/>
-        //     </div>
-        // </Modal>
+
     );
 };
 
