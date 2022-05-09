@@ -63,21 +63,19 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 	// 	}
   	// });
 
-	// useEffect(() => {
-    // 	// pause seconds
-	// 	if(item && item.status === "Done")	{
-	// 		handlePause()
-	// 	}
-  	// }, []);
+	useEffect(() => {
+    	// pause seconds
+		if(item && item.status === "Done")	{
+			handlePause()
+		}
+  	}, []);
 
-	// useEffect(() => {
-    // 	// Start the seconds and save seconds to the respective item
-	// 	if(item && item.status === "In Progress")	{
-	// 		countRef.current = setInterval(() => {
-	// 			setSeconds((seconds) => seconds += 1)
-	// 		}, 1000)
-	// 	}
-  	// }, []);
+	useEffect(() => {
+    	// Start the seconds and save seconds to the respective item
+		if(item && item.status === "In Progress")	{
+			handleStart()
+		}
+  	}, []);
 
 	return (
 		<div className="app">
