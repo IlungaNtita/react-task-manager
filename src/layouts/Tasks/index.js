@@ -26,8 +26,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
-import "@asseinfo/react-kanban/dist/styles.css";
-
 import Homepage from "layouts/Homepage";
 // import Header from "components/Header";
 import { DndProvider } from "react-dnd";

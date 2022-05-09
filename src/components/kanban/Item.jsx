@@ -6,7 +6,7 @@ import StopWatch from "./StopWatch";
 import Card from '@mui/material/Card';
 import MDTypography from "components/MDTypography";
 
-const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
+const Item = ({ item, index, moveItem, status, setTasks, tasks, setTitleInput, setContentInput, titleInput, contentInput }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -66,21 +66,24 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
                 <br />
                 <MDTypography sx={{ fontSize: 16 }}  gutterBottom>
-                    {item.content}
+                    {item.title}
                 </MDTypography>
-                <MDTypography sx={{ fontSize: 14 }} gutterBottom>
+                <MDTypography sx={{ fontSize: 16 }} gutterBottom>
                     {item.icon}
                 </MDTypography>
-                {/* <div class="loader-3">
-                    <div class="circle"></div>
-                </div> */}
                 <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
             </Card>
             <Window
-                item={item}
+                setTitleInput={setTitleInput} 
+                setContentInput={setContentInput}
+                titleInput={titleInput} 
+                contentInput={contentInput}
+                item={item} 
+                tasks={tasks} 
+                setTasks={setTasks} 
+                key={item.id}
                 onClose={onClose}
                 show={show}
-                key={item.time}
             />
         </Fragment>
     );

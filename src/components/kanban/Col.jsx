@@ -11,7 +11,7 @@ const Col = ({ isOver, children }) => {
 
     return (
         <div>
-            <Card id="delete-account" class="box" style={{borderRadius: "20px"}}>
+            <Card id="delete-account" className="box" style={{borderRadius: "20px"}}>
                 <MDBox pt={1} pb={2} px={2} >
                     <MDBox pt={1} pb={2} px={2}><MDButton>Add new task</MDButton></MDBox>
                     <div className={className}>
