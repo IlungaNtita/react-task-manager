@@ -65,8 +65,11 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks, setTitleInput, s
             >
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
                 <br />
-                <MDTypography sx={{ fontSize: 16 }}  gutterBottom>
+                <MDTypography sx={{ fontSize: 17 }}  gutterBottom>
                     {item.title}
+                </MDTypography>
+                <MDTypography sx={{ fontSize: 13 }}  gutterBottom>
+                    {item.content}
                 </MDTypography>
                 <MDTypography sx={{ fontSize: 16 }} gutterBottom>
                     {item.icon}

@@ -7,8 +7,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CreateIcon from '@mui/icons-material/Create';
 
-import Modal from '@mui/material/Modal';
-import Box from '@mui/material/Box';
+import 'antd/dist/antd.css';
+import { Modal, Button } from 'antd';
 
 // Focus React components
 import MDBox from "components/MDBox";
@@ -28,15 +28,15 @@ const style = {
 };
 
 const Window = ({ show, onClose, item, setTasks, tasks, setTitleInput, setContentInput, titleInput, contentInput }) => {
-    let edit = false; 
-    const [editMode, setEditMode] = useState(false)
     setTitleInput(item.title)
     setContentInput(item.content)
 
 
-    const updateTask = () => {
-        setEditMode(false)
+    const onSubmit = (e) => {
         // using javascript spread to append todos
+        e.preventDefault()
+        setTitleInput(titleInput)
+        setContentInput(contentInput)
         setTasks(tasks.map((element) => {
             if(element.id === item.id ){
                 return {
@@ -47,50 +47,14 @@ const Window = ({ show, onClose, item, setTasks, tasks, setTitleInput, setConten
     }
 
     return (
-        <Modal
-            open={show}
-            onClose={onClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-        >
-            <Box sx={style}>
+        <Modal title="Basic Modal" visible={show} onCancel={onClose} onOk={onSubmit}>
             <div className={"close-btn-ctn"}>
                 <MDTypography style={{ flex: "1 90%" }} variant="h3" fontWeight="large" display="block" color="text" >{item.title}</MDTypography>
-                <CancelIcon onClick={onClose}/>
             </div>
             <br />
             <div>
-                {!editMode ? 
                 <div>
-                    <MDTypography variant="h4" fontWeight="large" display="block" color="text" >Description</MDTypography>
-                        <MDTypography className="mb-3" sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                            {item.content}
-                        </MDTypography >
-                    <MDTypography variant="h4" fontWeight="large" display="block" color="text" >Status</MDTypography>
-                        <MDTypography className="mb-3" sx={{ fontSize: 16 }} color="text.secondary" gutterBottom>
-                            {item.icon} {`${item.status.charAt(0).toUpperCase()}${item.status.slice(1)}`}
-                        </MDTypography>
-                    <MDTypography className="mb-3" variant="h4" fontWeight="large" display="block" color="text" >
-                        Time
-                    </MDTypography>
-                    <div className="loader" style={{left:"130px", }}>
-                        <span className="hour"></span>
-                        <span className="min"></span>
-                        <span className="circel"></span>
-                    </div>
-                    <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
-                    <div>
-                        <MDButton variant="outlined" color="error" className="mr-2" startIcon={<DeleteIcon />}>
-                        Delete
-                        </MDButton>
-                        <MDButton variant="outlined" color="success" endIcon={<CreateIcon/>} onClick={ () => setEditMode(true)}>
-                        Edit 
-                        </MDButton>
-                    </div>
-                </div> 
-                : 
-                <div> 
-                    <div>
+                    <form onSubmit={onSubmit}>
                         <TextField
                         id="outlined-multiline-flexible"
                         label="Multiline"
@@ -118,14 +82,15 @@ const Window = ({ show, onClose, item, setTasks, tasks, setTitleInput, setConten
                         className="mb-3"
                         fullWidth
                         />
+                </form>
+                    <div>
+                        <MDButton variant="outlined" color="error" className="mr-2" startIcon={<DeleteIcon />}>
+                        Delete
+                        </MDButton>
                     </div>
-                    <MDButton variant="outlined"  endIcon={<CreateIcon/>} onClick={ updateTask }>
-                        Done 
-                    </MDButton>
-                </div>
-                }
+                </div> 
+                
             </div>
-            </Box>
         </Modal>
     );
 };
