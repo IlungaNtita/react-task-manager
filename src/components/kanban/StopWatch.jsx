@@ -38,37 +38,60 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 	// 	setSeconds(0)
 	// }
 
-	// useEffect(() => {
-    // 	// update minutes and reset seconds
-	// 	if(item && item.id)	{
-	// 		if(seconds >= 1 ){
-	// 			setTasks(tasks.map((element) => {
-	// 				if(element.id === item.id ){
-	// 					return {
-	// 						...element, minutes: minutes, hours: hours
-	// 					}
-	// 				}
-	// 				return element;
-	// 			}))
-	// 		}
-	// 	}
-
-	// 	if(seconds > 59)	{
-	// 		setSeconds(0)
-	// 		setMinutes((minutes) => minutes += 1)
-	// 	}
-	// 	if(minutes > 59)	{
-	// 		setMinutes(0)
-	// 		setHours((hours) => hours += 1)
-	// 	}
-  	// });
-
 	useEffect(() => {
     	// pause seconds
 		if(item && item.status === "Done")	{
+			let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+			setTasks(tasks.map((element) => {
+				
+				console.log("localTask localTask.seconds",localTask["seconds"])
+				if(element.id === item.id ){
+					return {
+						...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
+					}
+				}
+				return element;
+			}))
 			handlePause()
+			console.log("localTask",localTask, "item:", item.seconds)
 		}
   	}, []);
+
+	useEffect(() => {
+    	// update minutes and reset seconds
+		if(item && item.id)	{
+			const data = {seconds: seconds, minutes:minutes, hours:hours}
+			if(seconds >= 0 && isPaused === true){
+				localStorage.setItem(`task_${item.id}`, JSON.stringify(data))
+				console.log("localStorage", localStorage.getItem(`task_${item.id}`))
+			}
+		}
+
+		if(seconds > 59)	{
+			setSeconds(0)
+			setMinutes((minutes) => minutes += 1)
+			setTasks(tasks.map((element) => {
+				if(element.id === item.id ){
+					return {
+						...element, minutes: minutes, hours: hours, seconds: seconds
+					}
+				}
+				return element;
+			}))
+		}
+		if(minutes > 59)	{
+			setMinutes(0)
+			setHours((hours) => hours += 1)
+			setTasks(tasks.map((element) => {
+				if(element.id === item.id ){
+					return {
+						...element, minutes: minutes, hours: hours, seconds: seconds
+					}
+				}
+				return element;
+			}))
+		}
+  	});
 
 	useEffect(() => {
     	// Start the seconds and save seconds to the respective item
