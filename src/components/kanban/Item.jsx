@@ -3,8 +3,10 @@ import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../../data/types";
 import StopWatch from "./StopWatch";
+import Card from '@mui/material/Card';
+import MDTypography from "components/MDTypography";
 
-const Item = ({ item, index, moveItem, status }) => {
+const Item = ({ item, index, moveItem, status, setTasks, tasks, setTitleInput, setContentInput, titleInput, contentInput }) => {
     const ref = useRef(null);
 
     const [, drop] = useDrop({
@@ -52,22 +54,34 @@ const Item = ({ item, index, moveItem, status }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-
+    
     return (
         <Fragment>
-            <div
+            <Card
                 ref={ref}
                 style={{ opacity: isDragging ? 0 : 1 }}
                 className={"item"}
                 onClick={onOpen}
             >
                 <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
-                <p className={"item-title"}>{item.content}</p>
-                <p className={"item-status"}>{item.icon}</p>
-                <StopWatch/>
-            </div>
+                <br />
+                <MDTypography sx={{ fontSize: 16 }}  gutterBottom>
+                    {item.title}
+                </MDTypography>
+                <MDTypography sx={{ fontSize: 16 }} gutterBottom>
+                    {item.icon}
+                </MDTypography>
+                <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
+            </Card>
             <Window
-                item={item}
+                setTitleInput={setTitleInput} 
+                setContentInput={setContentInput}
+                titleInput={titleInput} 
+                contentInput={contentInput}
+                item={item} 
+                tasks={tasks} 
+                setTasks={setTasks} 
+                key={item.id}
                 onClose={onClose}
                 show={show}
             />
