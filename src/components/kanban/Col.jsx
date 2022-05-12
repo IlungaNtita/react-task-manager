@@ -5,7 +5,6 @@ import Card from "@mui/material/Card";
 // Focus React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import { Title } from "chart.js";
 
 const Col = ({ isOver, children, setTasks, tasks }) => {
     const className = isOver ? " highlight-region" : "";
@@ -18,6 +17,7 @@ const Col = ({ isOver, children, setTasks, tasks }) => {
         hours:0, 
         minutes:0, 
         seconds:0}
+
     const addTask = () => {
         setTasks([...tasks, newTask])
     }
