@@ -14,7 +14,7 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 		setIsPaused(true)
 		if(item.status === "In Progress" && isPaused === false){
 			countRef.current = setInterval(() => {
-				setSeconds((seconds) => seconds = seconds + 1)
+				setSeconds((seconds) => seconds += 1)
 			}, 1000)
 		}
 	}
@@ -24,34 +24,21 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 		setIsPaused(false)
 	}
 
-	// const handleResume = () => {
-	// 	setIsPaused(true)
-	// 	countRef.current = setInterval(() => {
-	// 		setSeconds((seconds) => seconds + 1)
-	// 	}, 1000)
-	// }
-
-	// const handleReset = () => {
-	// 	clearInterval(countRef.current)
-	// 	setIsActive(false)
-	// 	setIsPaused(false)
-	// 	setSeconds(0)
-	// }
-
 	useEffect(() => {
     	// pause seconds
 		if(item && item.status === "Done")	{
 			let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-			setTasks(tasks.map((element) => {
-				
-				console.log("localTask localTask.seconds",localTask["seconds"])
-				if(element.id === item.id ){
-					return {
-						...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
-					}
-				}
-				return element;
-			}))
+			setTimeout(() => {
+				setTasks(tasks.map((element) => {
+				    console.log("localTask localTask.seconds",localTask["seconds"])
+				    if(element.id === item.id ){
+					    return {
+						    ...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
+					    }
+				    }
+				    return element;
+			    }))
+			}, 500)
 			handlePause()
 			console.log("localTask",localTask, "item:", item.seconds)
 		}
@@ -73,7 +60,7 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 			setTasks(tasks.map((element) => {
 				if(element.id === item.id ){
 					return {
-						...element, minutes: minutes, hours: hours, seconds: seconds
+						...element, minutes: minutes, hours: hours, seconds: 0
 					}
 				}
 				return element;
@@ -85,7 +72,7 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 			setTasks(tasks.map((element) => {
 				if(element.id === item.id ){
 					return {
-						...element, minutes: minutes, hours: hours, seconds: seconds
+						...element, minutes: 0, hours: hours, seconds: seconds
 					}
 				}
 				return element;

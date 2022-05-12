@@ -27,9 +27,6 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
-import "@asseinfo/react-kanban/dist/styles.css";
-
-
 function Notifications() {
 
   const alertContent = (name) => (

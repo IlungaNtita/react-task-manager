@@ -30,11 +30,8 @@ import Homepage from "layouts/Homepage";
 // import Header from "components/Header";
 import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
-import { useState } from "react";
-import { data, statuses } from "../../data";
 
 function Tasks() {
-  const [tasks, setTasks] = useState(data)
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -42,7 +39,7 @@ function Tasks() {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={12}>
               <DndProvider backend={HTML5Backend}>
-                <Homepage tasks={tasks} setTasks={setTasks} />
+                <Homepage/>
               </DndProvider>
           </Grid>
         </Grid>
