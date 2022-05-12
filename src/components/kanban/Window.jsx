@@ -50,62 +50,22 @@ const data = [
 ];
 
 const Window = ({ show, onClose, item, setTasks, tasks }) => {
-    const [titleInput, setTitleInput] = useState(item.title);
-    const [contentInput, setContentInput] = useState(item.content);
 
 
     const onSubmit = (e) => {
         // using javascript spread to append todos
         e.preventDefault()
-        setTitleInput(titleInput)
-        setContentInput(contentInput)
-        setTasks(data)
+        setTasks(tasks.filter((element) => {
+            return element.id !== item.id
+        }))
     }
 
     return (
-        <Modal title="Basic Modal" visible={show} onCancel={onClose} onOk={onSubmit}>
-            <div className={"close-btn-ctn"}>
-                <MDTypography style={{ flex: "1 90%" }} variant="h3" display="block" color="text" >{item.title}</MDTypography>
-            </div>
-            <br />
+        <Modal title={`Delete ${item.title}`} visible={show} onCancel={onClose} onOk={onSubmit}>
             <div>
                 <div>
-                    <form onSubmit={onSubmit}>
-                        <TextField
-                        id="outlined-multiline-flexible"
-                        label="Multiline"
-                        type="text"
-                        multiline
-                        maxRows={4}
-                        defaultValue={titleInput}
-                        className="mb-3"
-                        fullWidth
-                        />
-                        <TextField
-                        id="outlined-textarea"
-                        label="Multiline Placeholder"
-                        placeholder="Placeholder"
-                        multiline
-                        hidden
-                        />
-                        <TextField
-                        id="outlined-multiline-static"
-                        label="Multiline"
-                        type="text"
-                        multiline
-                        rows={4}
-                        defaultValue={contentInput}
-                        className="mb-3"
-                        fullWidth
-                        />
-                    </form>
-                    <div>
-                        <MDButton variant="outlined" color="error" className="mr-2" startIcon={<DeleteIcon />}>
-                        Delete
-                        </MDButton>
-                    </div>
+                    <MDTypography style={{ flex: "1 90%" }} variant="h4" display="block" color="text" >Are you sure you you want to delete {item.title}?</MDTypography>
                 </div> 
-                
             </div>
         </Modal>
     );

@@ -50,7 +50,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
         })
     });
 
-    const [show, setShow] = useState(false);
     const [titleInput, setTitleInput] = useState(item.title);
     const [contentInput, setContentInput] = useState(item.content);
     const onToggle = () => setToggle(false);
@@ -61,7 +60,11 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     function contentHandleChange(event) {
         setContentInput(event.target.value);
     }
-    const onClose = () => setToggle(true);
+    const [show, setShow] = useState(false);
+
+    const onOpen = () => setShow(true);
+
+    const onClose = () => setShow(false);
 
     drag(drop(ref));
     
@@ -110,10 +113,18 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         variant="filled"
                         />
                         <div>
-                        <MDButton variant="outlined" color="error" className="mt-2 mr-2" startIcon={<DeleteIcon />}>
-                            Delete
-                        </MDButton>
-                    </div>
+                            <MDButton onClick={onOpen} variant="outlined" color="error" className="mt-2 mr-2" startIcon={<DeleteIcon />}>
+                                Delete
+                            </MDButton>
+                        </div>
+                        <Window
+                            item={item} 
+                            tasks={tasks} 
+                            setTasks={setTasks} 
+                            key={item.id}
+                            onClose={onClose}
+                            show={show}
+                        />
                     </div>
                 }
                 </Card>
