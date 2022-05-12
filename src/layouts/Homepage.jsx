@@ -1,17 +1,13 @@
 import Item from "../components/kanban/Item";
 import DropWrapper from "../components/kanban/DropWrapper";
 import Col from "../components/kanban/Col";
-import { data, statuses } from "../data";
-import { useState } from "react";
+import { statuses } from "../data";
 // import Card from "@mui/material/Card";
-// Focus React components
-import MDBox from "components/MDBox";
-import MDButton from "components/MDButton";
+import { useState } from "react";
+import { data } from "../data";
 
-const Homepage = ({setTasks, tasks}) => {
-    const [titleInput, setTitleInput] = useState("");
-    const [contentInput, setContentInput] = useState("");
-
+const Homepage = () => {
+    const [tasks, setTasks] = useState(data)
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
 
@@ -43,10 +39,7 @@ const Homepage = ({setTasks, tasks}) => {
                                 <Col>
                                 {tasks
                                     .filter(i => i.status === s.status)
-                                    .map((i, idx) => <Item titleInput={titleInput} 
-                                                        contentInput={contentInput}
-                                                        setTitleInput={setTitleInput} 
-                                                        setContentInput={setContentInput}
+                                    .map((i, idx) => <Item
                                                         key={i.id} 
                                                         item={i} 
                                                         index={idx} 
@@ -57,7 +50,7 @@ const Homepage = ({setTasks, tasks}) => {
                                                         )}
                                 </Col>
                             </DropWrapper>
-                        </div>                    
+                        </div> 
                     )
                 })
             :
