@@ -36,7 +36,7 @@ const Homepage = () => {
                         <div key={s.status} style={{ width:300 }} className="ml-3">
                             <h2 className="col-header">{s.status.toUpperCase()}</h2>
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col>
+                                <Col setTasks={setTasks} tasks={tasks}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item

@@ -76,6 +76,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     ref={ref}
                     style={{ opacity: isDragging ? 0 : 1 }}
                     className={"item"}
+                    onDoubleClick={() => !toggle}
                 >
                     <div className={"color-bar"} style={{ backgroundColor: status.color }}/>
                     <br />
@@ -96,7 +97,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     <div onDoubleClick={() => setToggle(true)}>
                         <TextField
                         id="standard-textarea"
-                        label="Multiline"
+                        label="Title"
                         multiline
                         maxRows={4}
                         defaultValue={titleInput}
@@ -105,7 +106,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         />
                         <TextField
                         id="standard-multiline-static"
-                        label="Multiline"
+                        label="Content"
                         multiline
                         rows={4}
                         onChange={contentHandleChange}
