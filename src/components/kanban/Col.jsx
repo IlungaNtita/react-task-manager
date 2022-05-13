@@ -6,7 +6,18 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
+// Focus React context
+import {
+  useMaterialUIController,
+} from "context";
+
 const Col = ({ isOver, children, setTasks, tasks }) => {
+    // ui
+    const [controller, dispatch] = useMaterialUIController();
+    const {
+        darkMode,
+    } = controller;
+
     const className = isOver ? " highlight-region" : "";
     const id = Math.floor(Math.random() * 10000) + 1
     const newTask = {id: id, 
@@ -23,9 +34,9 @@ const Col = ({ isOver, children, setTasks, tasks }) => {
     }
     return (
         <div>
-            <Card id="delete-account" className="box" style={{borderRadius: "20px"}}>
+            <Card id="delete-account" className="box" style={{borderRadius: "20px", backgroundColor: "#313958"}}>
                 <MDBox pt={1} pb={2} px={2} >
-                    <MDBox pt={1} pb={2} px={2}><MDButton onClick={addTask}>Add new task</MDButton></MDBox>
+                    <MDBox pt={1} pb={2} px={2}><MDButton color={darkMode ? "light" : "dark"} variant="gradient" onClick={addTask}>Add new task</MDButton></MDBox>
                     <div className={className}>
                         <MDBox component="ul" style={{ height:"200vh" }}  display="flex" flexDirection="column" p={0} m={1}>
                             {children}

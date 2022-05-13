@@ -88,7 +88,7 @@ function Footer({ light }) {
                   fontWeight="regular"
                   color={light ? "white" : "dark"}
                 >
-                  Creative Tim
+                  Ilunga Ntita
                 </MDTypography>
               </Link>
             </MDBox>

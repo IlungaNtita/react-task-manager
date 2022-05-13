@@ -255,6 +255,10 @@ select {
  }
 }
 
+.ant-modal-body{
+  background-color: #054F7C;
+}
+
 /* From uiverse.io by @mobinkakei */
 .loader-3 {
   width: 10em;
@@ -270,7 +274,7 @@ select {
 }
 
 .circle:nth-child(1) {
-  background-color: #f94346;
+  background-color: #313958;
 }
 
 .circle::before {
