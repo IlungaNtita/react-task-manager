@@ -5,6 +5,7 @@ import { statuses } from "../data";
 // import Card from "@mui/material/Card";
 import { useState } from "react";
 import { data } from "../data";
+import MDTypography from "components/MDTypography";
 
 const Homepage = () => {
     const [tasks, setTasks] = useState(data)
@@ -34,7 +35,11 @@ const Homepage = () => {
                 statuses.map(s => {
                     return (
                         <div key={s.status} style={{ width:300 }} className="ml-3">
-                            <h2 className="col-header">{s.status.toUpperCase()}</h2>
+
+                            <MDTypography variant="h1" sx={{ fontSize: 18 }}  gutterBottom>
+                                {s.status.toUpperCase()}
+                            </MDTypography>
+
                             <DropWrapper onDrop={onDrop} status={s.status}>
                                 <Col setTasks={setTasks} tasks={tasks}> 
                                 {tasks

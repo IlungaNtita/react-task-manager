@@ -96,6 +96,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     :
                     <div onDoubleClick={() => setToggle(true)}>
                         <TextField
+                        style={{color:"red"}}
                         id="standard-textarea"
                         label="Title"
                         multiline
