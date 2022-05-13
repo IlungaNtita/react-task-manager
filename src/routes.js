@@ -48,10 +48,14 @@ import Tasks from "layouts/Tasks";
 // @mui icons
 import Icon from "@mui/material/Icon";
 
+import MDTypography from "components/MDTypography";
+
 const routes = [
   {
     type: "collapse",
-    name: "Dashboard",
+    name: <MDTypography sx={{ fontSize: 14 }}  gutterBottom>
+            Dashboard
+          </MDTypography>,
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
@@ -67,7 +71,9 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Tasks",
+    name: <MDTypography sx={{ fontSize: 14 }}  gutterBottom>
+            Tasks
+          </MDTypography>,
     key: "tasks",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tasks",
@@ -75,7 +81,9 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Billing",
+    name: <MDTypography sx={{ fontSize: 14 }}  gutterBottom>
+            Billing
+          </MDTypography>,
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
@@ -99,20 +107,25 @@ const routes = [
   // },
   {
     type: "collapse",
-    name: "Sign In",
+    name: <MDTypography sx={{ fontSize: 14 }}  gutterBottom>
+            Sign In
+          </MDTypography>,
     key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
+    icon: <Icon fontSize="small">login yeah</Icon>,
     route: "/authentication/sign-in",
     component: <SignIn />,
   },
   {
     type: "collapse",
-    name: "Sign Up",
+    name: <MDTypography sx={{ fontSize: 14 }}  gutterBottom>
+            Sign Up
+          </MDTypography>,
     key: "sign-up",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
+  
 ];
 
 export default routes;
