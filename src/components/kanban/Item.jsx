@@ -8,6 +8,24 @@ import MDTypography from "components/MDTypography";
 import TextField from '@mui/material/TextField';
 import MDButton from "components/MDButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  useQuery,
+  gql
+} from "@apollo/client";
+import { Link } from "react-router-dom";
+
+const ALL_TASKS = gql`
+  query AllTasks {
+    allTasks {
+      id
+      title
+      description
+      hour
+      minute
+      second
+    }
+  }
+`;
 
 const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     const ref = useRef(null);
@@ -52,7 +70,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
 
     const [titleInput, setTitleInput] = useState(item.title);
     const [contentInput, setContentInput] = useState(item.content);
-    const onToggle = () => setToggle(false);
 
     function titleHandleChange(event) {
         setTitleInput(event.target.value);
@@ -67,7 +84,8 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-    
+    const { loading, error, data } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
+    if (error) return `Error! ${error}`;
     
     return (
             status !== undefined ?
@@ -82,10 +100,10 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     <br />
                     {toggle === true ?
                     <div onDoubleClick={() => setToggle(false)}>
-                        <MDTypography sx={{ fontSize: 17 }}  gutterBottom>
+                        <MDTypography sx={{ fontSize: 18 }}  gutterBottom>
                         {item.title}
                         </MDTypography>
-                        <MDTypography sx={{ fontSize: 13 }}  gutterBottom>
+                        <MDTypography sx={{ fontSize: 15 }}  gutterBottom>
                             {item.content}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 16 }} gutterBottom>
@@ -103,7 +121,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         maxRows={4}
                         defaultValue={titleInput}
                         onChange={titleHandleChange}
-                        variant="filled"
+                        variant="standard"
                         />
                         <TextField
                         id="standard-multiline-static"
@@ -112,7 +130,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         rows={4}
                         onChange={contentHandleChange}
                         defaultValue={contentInput}
-                        variant="filled"
+                        variant="standard"
                         />
                         <div>
                             <MDButton onClick={onOpen} variant="outlined" color="error" className="mt-2 mr-2" startIcon={<DeleteIcon />}>
