@@ -69,7 +69,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     });
 
     const [titleInput, setTitleInput] = useState(item.title);
-    const [contentInput, setContentInput] = useState(item.content);
+    const [contentInput, setContentInput] = useState(item.description);
 
     function titleHandleChange(event) {
         setTitleInput(event.target.value);
@@ -104,7 +104,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         {item.title}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 15 }}  gutterBottom>
-                            {item.content}
+                            {item.description}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 16 }} gutterBottom>
                             {item.icon}

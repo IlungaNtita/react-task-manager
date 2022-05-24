@@ -30,8 +30,14 @@ import Homepage from "layouts/Homepage";
 // import Header from "components/Header";
 import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
+import { useQuery } from "@apollo/client";
+import { ALL_TASKS } from "../../graphql/queries";
 
 function Tasks() {
+  const { loading, error, data } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
+
+  if (loading) return <h2> Loading... </h2>;
+  if (error) return <h2> ERROR...: {error} </h2>;
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -39,7 +45,7 @@ function Tasks() {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={12}>
               <DndProvider backend={HTML5Backend}>
-                <Homepage/>
+                <Homepage data={data.allTasks}/>
               </DndProvider>
           </Grid>
         </Grid>

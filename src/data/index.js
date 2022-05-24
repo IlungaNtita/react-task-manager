@@ -1,10 +1,10 @@
-const data = [
+const demoTasks = [
     {
         id: 1,
         icon: "⭕️",
         status: "To Do",
         title: "Human Interest Form",
-        content: "Fill out human interest distribution form",
+        description: "Fill out human interest distribution form",
         seconds: 0,
         minutes: 0,
         hours: 0,
@@ -13,7 +13,7 @@ const data = [
         icon: "⭕️",
         status: "To Do",
         title: "Purchase present",
-        content: "Get an anniversary gift",
+        description: "Get an anniversary gift",
         seconds: 0,
         minutes: 0,
         hours: 0,
@@ -22,7 +22,7 @@ const data = [
         icon: "⭕️",
         status: "To Do",
         title: "Invest in investments",
-        content: "Call the bank to talk about investments",
+        description: "Call the bank to talk about investments",
         seconds: 0,
         minutes: 0,
         hours: 0,
@@ -31,7 +31,7 @@ const data = [
         icon: "⭕️",
         status: "To Do",
         title: "Daily reading",
-        content: "Finish reading Intro to UI/UX",
+        description: "Finish reading Intro to UI/UX",
         seconds: 0,
         minutes: 0,
         hours: 0,
@@ -39,18 +39,18 @@ const data = [
 ];
 
 const statuses = [{
-    status: "To Do",
+    status: "TODO",
     icon: "⭕️",
     color: "#00C2E0"
 }, {
-    status: "In Progress",
+    status: "IN_PROGRESS",
     icon: "⏱️",
     color: "#EB5A46"
 }, {
-    status: "Done",
+    status: "DONE",
     icon: "✅",
     color: "rgb(68, 163, 94)"
 }];
 
 
-export { data, statuses };
+export { demoTasks, statuses };

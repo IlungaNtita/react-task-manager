@@ -4,10 +4,10 @@ import Col from "../components/kanban/Col";
 import { statuses } from "../data";
 // import Card from "@mui/material/Card";
 import { useState } from "react";
-import { data } from "../data";
+// import { demoTasks } from "../data";
 import MDTypography from "components/MDTypography";
 
-const Homepage = () => {
+const Homepage = ({data}) => {
     const [tasks, setTasks] = useState(data)
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
@@ -29,6 +29,8 @@ const Homepage = () => {
         });
     };
 
+    
+    // setTimeout(() => setTasks(data.allTasks), 1000);
     return (
         <div className="row">
             { statuses ?
@@ -41,7 +43,7 @@ const Homepage = () => {
                             </MDTypography>
 
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col setTasks={setTasks} tasks={tasks}> 
+                                <Col setTasks={setTasks} tasks={data.allTasks}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item
@@ -50,7 +52,7 @@ const Homepage = () => {
                                                         index={idx} 
                                                         moveItem={moveItem} 
                                                         status={s} 
-                                                        tasks={tasks} 
+                                                        F={data.allTasks}
                                                         setTasks={setTasks}/>
                                                         )}
                                 </Col>
