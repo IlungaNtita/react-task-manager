@@ -19,24 +19,17 @@ const Col = ({ isOver, children, createTask, setTasks, tasks }) => {
     } = controller;
 
     const className = isOver ? " highlight-region" : "";
-    // const id = Math.floor(Math.random() * 10000) + 1
-    // const newTask = {id: id, 
-    //     title:"New task (Double click to edit)", 
-    //     content: "", 
-    //     status: "To Do", 
-    //     icon: "⭕️",
-    //     hours:0, 
-    //     minutes:0, 
-    //     seconds:0}
 
     const addTask = () => {
-        createTask({ variables: { 
-                title:"New task (Double click to edit)", 
-                description: "", 
-            } 
-        })
-        console.log("add task", createTask)
+        createTask(
+            {   variables: { 
+                    title:"New task (Double click to edit)", 
+                    description: "", 
+                } 
+            }
+        )
     }
+    
     return (
         <div>
             <Card id="delete-account" className="gradient-border" style={{borderRadius: "20px", backgroundColor: "#313958"}}>

@@ -27,16 +27,23 @@ export const TASK_CREATE = gql`
 
 export const UPDATE_TASK = gql`
     mutation TaskUpdate(
-        $id:ID
+        $id:ID!
         $title:String
+        $icon:String
         $status:String
         $description:String
         $hours:Int
         $minutes:Int
         $seconds:Int
     ) {
-        taskUpdate(input:{
-            title:$title description: $descriptio status: $status hours: $hours minutes:$minutes seconds:$seconds
+        taskUpdate(id:$id input:{
+            title:$title
+            description: $description 
+            status: $status 
+            icon: $icon 
+            hours: $hours 
+            minutes:$minutes 
+            seconds:$seconds
         }) {
             task{
                 id

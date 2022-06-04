@@ -8,6 +8,7 @@ import MDTypography from "components/MDTypography";
 import TextField from '@mui/material/TextField';
 import MDButton from "components/MDButton";
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Item = ({ item, index, moveItem, status, setTasks, tasks,
     createTask,
@@ -55,6 +56,19 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
 
     const [titleInput, setTitleInput] = useState(item.title);
     const [contentInput, setContentInput] = useState(item.description);
+    const handleUpdate = () => {
+        updateTask(
+            {
+                variables: {
+                    id:item.id,
+                    title:titleInput,
+                    description:contentInput,
+                }
+            }
+        )
+        console.log(titleInput, "titleInput", item.id, "item title", item.title)
+        setToggle(true)
+    };
 
     function titleHandleChange(event) {
         setTitleInput(event.target.value);
@@ -118,6 +132,9 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                         <div>
                             <MDButton onClick={onOpen} variant="outlined" color="error" className="mt-2 mr-2" startIcon={<DeleteIcon />}>
                                 Delete
+                            </MDButton>
+                            <MDButton onClick={handleUpdate} variant="outlined" color="success" className="mt-2 mr-2" startIcon={<CheckIcon />}>
+                                Save
                             </MDButton>
                         </div>
                         <Window
