@@ -4,11 +4,14 @@ import Col from "../components/kanban/Col";
 import { statuses } from "../data";
 // import Card from "@mui/material/Card";
 import { useState } from "react";
-// import { demoTasks } from "../data";
 import MDTypography from "components/MDTypography";
 
-const Homepage = ({data}) => {
-    const [tasks, setTasks] = useState(data)
+const Homepage = ({
+    taskData, 
+    createTask,
+    updateTask,
+    deleteTask}) => {
+    const [tasks, setTasks] = useState(taskData)
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
 
@@ -43,7 +46,7 @@ const Homepage = ({data}) => {
                             </MDTypography>
 
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col setTasks={setTasks} tasks={data.allTasks}> 
+                                <Col createTask={createTask} setTasks={setTasks} tasks={taskData.allTasks}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item
@@ -52,8 +55,11 @@ const Homepage = ({data}) => {
                                                         index={idx} 
                                                         moveItem={moveItem} 
                                                         status={s} 
-                                                        F={data.allTasks}
-                                                        setTasks={setTasks}/>
+                                                        tasks={taskData.allTasks}
+                                                        setTasks={setTasks}
+                                                        createTask={createTask}
+                                                        updateTask={updateTask}
+                                                        deleteTask={deleteTask}/>
                                                         )}
                                 </Col>
                             </DropWrapper>

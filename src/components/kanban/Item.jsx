@@ -8,26 +8,11 @@ import MDTypography from "components/MDTypography";
 import TextField from '@mui/material/TextField';
 import MDButton from "components/MDButton";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {
-  useQuery,
-  gql
-} from "@apollo/client";
-import { Link } from "react-router-dom";
 
-const ALL_TASKS = gql`
-  query AllTasks {
-    allTasks {
-      id
-      title
-      description
-      hour
-      minute
-      second
-    }
-  }
-`;
-
-const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
+const Item = ({ item, index, moveItem, status, setTasks, tasks,
+    createTask,
+    updateTask,
+    deleteTask}) => {
     const ref = useRef(null);
     const [toggle, setToggle] = useState(true);
     const [, drop] = useDrop({
@@ -84,8 +69,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-    const { loading, error, data } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
-    if (error) return `Error! ${error}`;
     
     return (
             status !== undefined ?
@@ -101,7 +84,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     {toggle === true ?
                     <div onDoubleClick={() => setToggle(false)}>
                         <MDTypography sx={{ fontSize: 18 }}  gutterBottom>
-                        {item.title}
+                            {item.title}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 15 }}  gutterBottom>
                             {item.description}

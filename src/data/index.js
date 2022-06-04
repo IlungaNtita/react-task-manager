@@ -35,19 +35,28 @@ const demoTasks = [
         seconds: 0,
         minutes: 0,
         hours: 0,
+    }, {
+        id: 5,
+        icon: "⭕️",
+        status: "To Do",
+        title: "Learn PHP",
+        description: "Finish reading Intro to UI/UX",
+        seconds: 0,
+        minutes: 20,
+        hours: 0,
     }
 ];
 
 const statuses = [{
-    status: "TODO",
+    status: "To Do",
     icon: "⭕️",
     color: "#00C2E0"
 }, {
-    status: "IN_PROGRESS",
+    status: "In Progress",
     icon: "⏱️",
     color: "#EB5A46"
 }, {
-    status: "DONE",
+    status: "Done",
     icon: "✅",
     color: "rgb(68, 163, 94)"
 }];

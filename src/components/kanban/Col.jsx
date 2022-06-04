@@ -11,26 +11,31 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Col = ({ isOver, children, setTasks, tasks }) => {
+const Col = ({ isOver, children, createTask, setTasks, tasks }) => {
     // ui
-    const [controller, dispatch] = useMaterialUIController();
+    const [controller,] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
 
     const className = isOver ? " highlight-region" : "";
-    const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = {id: id, 
-        title:"New task (Double click to edit)", 
-        content: "", 
-        status: "To Do", 
-        icon: "⭕️",
-        hours:0, 
-        minutes:0, 
-        seconds:0}
+    // const id = Math.floor(Math.random() * 10000) + 1
+    // const newTask = {id: id, 
+    //     title:"New task (Double click to edit)", 
+    //     content: "", 
+    //     status: "To Do", 
+    //     icon: "⭕️",
+    //     hours:0, 
+    //     minutes:0, 
+    //     seconds:0}
 
     const addTask = () => {
-        setTasks([...tasks, newTask])
+        createTask({ variables: { 
+                title:"New task (Double click to edit)", 
+                description: "", 
+            } 
+        })
+        console.log("add task", createTask)
     }
     return (
         <div>
