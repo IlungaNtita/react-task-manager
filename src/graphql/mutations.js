@@ -27,7 +27,7 @@ export const TASK_CREATE = gql`
 
 export const UPDATE_TASK = gql`
     mutation TaskUpdate(
-        $id:Int
+        $id:ID
         $title:String
         $status:String
         $description:String
@@ -50,7 +50,7 @@ export const UPDATE_TASK = gql`
 `;
 
 export const DELETE_TASK = gql`
-    mutation DeleteTask($id: Int) {
+    mutation DeleteTask($id: ID) {
         taskDelete(id:$id) {
             ok
         }

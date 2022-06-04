@@ -3,7 +3,7 @@ import DropWrapper from "../components/kanban/DropWrapper";
 import Col from "../components/kanban/Col";
 import { statuses } from "../data";
 // import Card from "@mui/material/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MDTypography from "components/MDTypography";
 
 const Homepage = ({
@@ -12,6 +12,10 @@ const Homepage = ({
     updateTask,
     deleteTask}) => {
     const [tasks, setTasks] = useState(taskData)
+    useEffect(() => {
+    	// Start the seconds and save seconds to the respective item
+        setTasks(taskData);
+  	}, [taskData]);
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
 

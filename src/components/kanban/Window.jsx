@@ -22,7 +22,7 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Window = ({ show, onClose, item, setTasks, tasks }) => {
+const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
     // ui
     const [controller, dispatch] = useMaterialUIController();
     const {
@@ -32,9 +32,10 @@ const Window = ({ show, onClose, item, setTasks, tasks }) => {
     const onSubmit = (e) => {
         // using javascript spread to append todos
         e.preventDefault()
-        setTasks(tasks.filter((element) => {
-            return element.id !== item.id
-        }))
+        deleteTask({variables:{id:item.id}})
+        // setTasks(tasks.filter((element) => {
+        //     return element.id !== item.id
+        // }))
     }
 
     const style = () => {
@@ -59,7 +60,7 @@ const Window = ({ show, onClose, item, setTasks, tasks }) => {
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    <MDTypography variant="h4" color="dark" >Are you sure you you want to delete {item.title}?</MDTypography>
+                    <MDTypography variant="h4" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

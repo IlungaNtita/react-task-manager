@@ -127,6 +127,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                             key={item.id}
                             onClose={onClose}
                             show={show}
+                            deleteTask={deleteTask}
                         />
                     </div>
                 }
