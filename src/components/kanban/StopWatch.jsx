@@ -9,6 +9,7 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	const [hours, setHours] = useState(item.hours)
 	const [isPaused, setIsPaused] = useState(false)
 	const countRef = useRef(null)
+	const localData = useRef("")
 
 	const handleStart = () => {
 		setIsPaused(true)
@@ -24,29 +25,27 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 		setIsPaused(false)
 	}
 
-	let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+	localData.current = JSON.parse(localStorage.getItem(`task_${item.id}`))
 
-	// useEffect(() => {
-    // 	// pause seconds
-	// 	let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-	// 	if(item && item.status === "Done")	{
-	// 		console.log(localTask)
-	// 		setTimeout(() => {
-	// 			setTasks(tasks.map((element) => {
-	// 			    console.log("localTask localTask.seconds",localTask["seconds"])
-	// 			    if(element.id === item.id ){
-	// 				    return {
-	// 					    ...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
-	// 				    }
-	// 			    }
-	// 			    return element;
-	// 		    }))
-	// 		}, 1000)
-	// 		handlePause()
-	// 		console.log("localTask",localTask, "item:", item.seconds)
-	// 		// setTasks(taskData)
-	// 	}
-  	// }, []);
+	useEffect(() => {
+    	// pause seconds
+		if(item && item.status === "Done")	{
+			console.log(localData.current, "from stopwatch")
+			setTimeout(() => {
+				setTasks(tasks.map((element) => {
+				    console.log("localData.current localData.current.seconds",localData.current["seconds"])
+				    if(element.id === item.id ){
+					    return {
+						    ...element, minutes: localData.current.minutes, hours: localData.current.hours, seconds: localData.current.seconds
+					    }
+				    }
+				    return element;
+			    }))
+			}, 1000)
+			handlePause()
+			console.log("localData.current",localData.current, "item:", item.seconds)
+		}
+  	}, []);
 
 	useEffect(() => {
     	// update minutes and reset seconds
@@ -93,12 +92,12 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	return (
 		<div className="app">
 			<div className='stopwatch-card'>
-				{item.status === "Done" && localTask
+				{item.status === "Done" && localData.current
 				?
 				<p className='text-muted'>
-					{hours > 0 ? <span className='mr-2'>{localTask.hours} hours</span> : <span></span>}
-					{minutes > 0 ? <span className='mr-2'>{localTask.minutes} min</span> : <span></span>}
-					{seconds > 0 ? <span>{localTask.seconds} sec</span> : <span>0 sec</span>}
+					{localData.current.hours > 0 ? <span className='mr-2'>{localData.current.hours} hours</span> : <span></span>}
+					{localData.current.minutes > 0 ? <span className='mr-2'>{localData.current.minutes} min</span> : <span></span>}
+					{localData.current.seconds > 0 ? <span>{localData.current.seconds} sec</span> : <span>0 sec</span>}
 				</p>
 				:
 				<p className='text-muted'>

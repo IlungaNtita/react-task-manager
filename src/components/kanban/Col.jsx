@@ -24,7 +24,9 @@ const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
         createTask(
             {   variables: { 
                     title:"New task (Double click to edit)", 
-                    description: "", 
+                    description: "",
+                    status: "To Do",
+                    icon: "⭕️"
                 } 
             }
         )

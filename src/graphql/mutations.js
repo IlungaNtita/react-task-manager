@@ -6,6 +6,8 @@ export const TASK_CREATE = gql`
     mutation TaskCreate($title:String
                     $status:String
                     $description:String
+                    $status: String
+                    $icon: String 
                     $user:ID
                     $hours:Int
                     $minutes:Int
@@ -13,10 +15,13 @@ export const TASK_CREATE = gql`
     ) {
         taskCreate(input:{
             title:$title description: $description status: $status user: $user hours: $hours minutes:$minutes seconds:$seconds
+            status: $status 
+            icon: $icon 
         }) {
             task{
                 id
                 title
+                description
                 hours
                 status
                 icon 
@@ -36,18 +41,53 @@ export const UPDATE_TASK = gql`
         $minutes:Int
         $seconds:Int
     ) {
-        taskUpdate(id:$id input:{
-            title:$title
-            description: $description 
-            status: $status 
-            icon: $icon 
-            hours: $hours 
-            minutes:$minutes 
-            seconds:$seconds
-        }) {
-            task{
+        taskUpdate(
+            id:$id 
+            input: {
+                title:$title
+                description: $description 
+                status: $status 
+                icon: $icon 
+                hours: $hours 
+                minutes:$minutes 
+                seconds:$seconds
+            }
+        ) {
+            task {
                 id
                 title
+                description
+                hours
+                status
+                icon 
+            }
+        }
+    }
+`;
+
+export const UPDATE_TASK_TIME = gql`
+    mutation TaskUpdateTime(
+        $id:ID!
+        $icon:String
+        $status:String
+        $hours:Int
+        $minutes:Int
+        $seconds:Int
+    ) {
+        taskUpdateTime(
+            id:$id 
+            input: {
+                status: $status
+                icon: $icon 
+                hours: $hours 
+                minutes:$minutes 
+                seconds:$seconds
+            }
+        ) {
+            task {
+                id
+                title
+                description
                 hours
                 status
                 icon 

@@ -32,7 +32,7 @@ import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import { useQuery, useMutation } from "@apollo/client";
 import { ALL_TASKS } from "../../graphql/queries";
-import { TASK_CREATE, UPDATE_TASK, DELETE_TASK } from "../../graphql/mutations";
+import { TASK_CREATE, UPDATE_TASK, DELETE_TASK, UPDATE_TASK_TIME } from "../../graphql/mutations";
 
 function Tasks() {
   const { loading:tasksLoading, error:tasksError, data:taskData } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
@@ -42,6 +42,11 @@ function Tasks() {
     ]},
   );
   const [taskUpdate] = useMutation(UPDATE_TASK,{
+    refetchQueries: [
+      {query: ALL_TASKS}, // DocumentNode object parsed with gql
+    ]},
+  );
+  const [taskUpdateTime] = useMutation(UPDATE_TASK_TIME,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql
     ]},
@@ -75,6 +80,7 @@ function Tasks() {
                   taskData={taskData.allTasks} 
                   createTask={taskCreate}
                   updateTask={taskUpdate}
+                  updateTaskTime={taskUpdateTime}
                   deleteTask={taskDelete}
                   />
                 {/* {data.allTasks.map(s => {

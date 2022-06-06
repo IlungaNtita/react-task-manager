@@ -10,6 +10,7 @@ const Homepage = ({
     taskData, 
     createTask,
     updateTask,
+    updateTaskTime,
     deleteTask}) => {
     const [tasks, setTasks] = useState(taskData)
     const [updated, setUpdated] = useState(false)
@@ -69,6 +70,7 @@ const Homepage = ({
                                                         setTasks={setTasks}
                                                         createTask={createTask}
                                                         updateTask={updateTask}
+                                                        updateTaskTime={updateTaskTime}
                                                         deleteTask={deleteTask}
                                                         updated={updated}
                                                         setUpdated={setUpdated}/>

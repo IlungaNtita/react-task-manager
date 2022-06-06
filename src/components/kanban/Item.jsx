@@ -13,6 +13,7 @@ import CheckIcon from '@mui/icons-material/Check';
 const Item = ({ item, index, moveItem, status, setTasks, tasks,
     createTask,
     updateTask,
+    updateTaskTime,
     deleteTask,
     updated,
     setUpdated,
@@ -68,9 +69,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                 return element;
             })
         )
-       
-        
-            
+   
         setTimeout(() => {
             updateTask(
                 {
@@ -78,6 +77,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                         id:item.id,
                         title:titleInput,
                         description:contentInput,
+                        status:item.status
                     }
                 }
             )
@@ -108,17 +108,18 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
             let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
             if((item && item.status === "Done" && localTask) && (localTask.minutes || localTask.seconds || localTask.hours) )	{
                 let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-                updateTask(
+                setTimeout(() => {updateTaskTime(
                     {
                         variables: {
                             id:item.id,
                             minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
                             status:"Done",
-                            icon:"✅"
+                            icon:item.icon
                         }
                     }
                 )
-                console.log("Done worked")
+                console.log("Done worked", taskData)
+                }, 1500)
             }
             else if((item && item.status === "In Progress" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
                 let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
@@ -126,32 +127,18 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                     {
                         variables: {
                             id:item.id,
+                            title:titleInput,
+                            description:contentInput,
                             minutes: localTask.minutes, 
                             hours: localTask.hours, 
                             seconds: localTask.seconds,
                             status:"In Progress",
-                            icon:"⏱️"
+                            icon:item.icon
                         }
                     }
                 )
-                console.log("In Progress worked")
+                console.log("In Progress worked", taskData)
             }
-            // else if(item && item.status === "To Do" && localTask && localTask.minutes)	{
-            //     let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-            //     updateTask(
-            //         {
-            //             variables: {
-            //                 id:item.id,
-            //                 minutes: localTask.minutes,
-            //                 hours: localTask.hours, 
-            //                 seconds: localTask.seconds,
-            //                 status:"To Do",
-            //                 icon:"⭕️"
-            //             }
-            //         }
-            //     )
-            //     console.log("To Do worked")
-            // }
         }
     }, [])
 
@@ -187,6 +174,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                         id="standard-textarea"
                         label="Title"
                         multiline
+                        fullWidth
                         maxRows={4}
                         defaultValue={titleInput}
                         onChange={titleHandleChange}
@@ -196,6 +184,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                         id="standard-multiline-static"
                         label="Content"
                         multiline
+                        fullWidth
                         rows={4}
                         onChange={contentHandleChange}
                         defaultValue={contentInput}
