@@ -9,7 +9,7 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	const [hours, setHours] = useState(item.hours)
 	const [isPaused, setIsPaused] = useState(false)
 	const countRef = useRef(null)
-	const localData = useRef("")
+	const localData = useRef({seconds: seconds, minutes:minutes, hours:hours})
 
 	const handleStart = () => {
 		setIsPaused(true)
@@ -92,7 +92,7 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	return (
 		<div className="app">
 			<div className='stopwatch-card'>
-				{item.status === "Done" && localData.current
+				{(item.status === "Done" || "To Do") && localData.current
 				?
 				<p className='text-muted'>
 					{localData.current.hours > 0 ? <span className='mr-2'>{localData.current.hours} hours</span> : <span></span>}

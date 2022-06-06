@@ -108,31 +108,46 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
             let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
             if((item && item.status === "Done" && localTask) && (localTask.minutes || localTask.seconds || localTask.hours) )	{
                 let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-                setTimeout(() => {updateTaskTime(
-                    {
-                        variables: {
-                            id:item.id,
-                            minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
-                            status:"Done",
-                            icon:item.icon
+                setTimeout(() => {
+                    updateTaskTime(
+                        {
+                            variables: {
+                                id:item.id,
+                                minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
+                                status:"Done",
+                                icon:item.icon
+                            }
                         }
-                    }
-                )
-                console.log("Done worked", taskData)
+                    )
+                    console.log("Done worked", taskData)
                 }, 1500)
             }
             else if((item && item.status === "In Progress" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
                 let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-                updateTask(
+                updateTaskTime(
                     {
                         variables: {
                             id:item.id,
-                            title:titleInput,
-                            description:contentInput,
                             minutes: localTask.minutes, 
                             hours: localTask.hours, 
                             seconds: localTask.seconds,
                             status:"In Progress",
+                            icon:item.icon
+                        }
+                    }
+                )
+                console.log("In Progress worked", taskData)
+            }
+            else if((item && item.status === "To Do" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                updateTaskTime(
+                    {
+                        variables: {
+                            id:item.id,
+                            minutes: localTask.minutes,
+                            hours: localTask.hours,
+                            seconds: localTask.seconds,
+                            status:"To Do",
                             icon:item.icon
                         }
                     }
