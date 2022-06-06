@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'
-import formatTime from 'utils/formatTime'
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment, counterSlice } from 'store/counterSlice'
+import React, { useState, useRef, useEffect } from 'react'
+// import formatTime from 'utils/formatTime'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { decrement, increment, counterSlice } from 'store/counterSlice'
 
 const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	const [seconds, setSeconds] = useState(item.seconds)
@@ -24,26 +24,29 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 		setIsPaused(false)
 	}
 
-	useEffect(() => {
-    	// pause seconds
-		if(item && item.status === "Done")	{
-			let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-			setTimeout(() => {
-				setTasks(tasks.map((element) => {
-				    console.log("localTask localTask.seconds",localTask["seconds"])
-				    if(element.id === item.id ){
-					    return {
-						    ...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
-					    }
-				    }
-				    return element;
-			    }))
-			}, 500)
-			handlePause()
-			console.log("localTask",localTask, "item:", item.seconds)
-			setTasks(taskData)
-		}
-  	}, []);
+	let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+
+	// useEffect(() => {
+    // 	// pause seconds
+	// 	let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+	// 	if(item && item.status === "Done")	{
+	// 		console.log(localTask)
+	// 		setTimeout(() => {
+	// 			setTasks(tasks.map((element) => {
+	// 			    console.log("localTask localTask.seconds",localTask["seconds"])
+	// 			    if(element.id === item.id ){
+	// 				    return {
+	// 					    ...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
+	// 				    }
+	// 			    }
+	// 			    return element;
+	// 		    }))
+	// 		}, 1000)
+	// 		handlePause()
+	// 		console.log("localTask",localTask, "item:", item.seconds)
+	// 		// setTasks(taskData)
+	// 	}
+  	// }, []);
 
 	useEffect(() => {
     	// update minutes and reset seconds
@@ -51,7 +54,6 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 			const data = {seconds: seconds, minutes:minutes, hours:hours}
 			if(seconds >= 0 && isPaused === true){
 				localStorage.setItem(`task_${item.id}`, JSON.stringify(data))
-				console.log("localStorage", localStorage.getItem(`task_${item.id}`))
 			}
 		}
 
@@ -91,11 +93,19 @@ const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	return (
 		<div className="app">
 			<div className='stopwatch-card'>
+				{item.status === "Done" && localTask
+				?
+				<p className='text-muted'>
+					{hours > 0 ? <span className='mr-2'>{localTask.hours} hours</span> : <span></span>}
+					{minutes > 0 ? <span className='mr-2'>{localTask.minutes} min</span> : <span></span>}
+					{seconds > 0 ? <span>{localTask.seconds} sec</span> : <span>0 sec</span>}
+				</p>
+				:
 				<p className='text-muted'>
 					{hours > 0 ? <span className='mr-2'>{hours} hours</span> : <span></span>}
 					{minutes > 0 ? <span className='mr-2'>{minutes} min</span> : <span></span>}
 					{seconds > 0 ? <span>{seconds} sec</span> : <span>0 sec</span>}
-				</p>
+				</p>}
 			</div>
 		</div>
 	);

@@ -16,7 +16,7 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
+const Window = ({ show, onClose, item, setTasks, tasks, deleteTask, taskData }) => {
     // ui
     const [controller] = useMaterialUIController();
     const {
@@ -26,10 +26,13 @@ const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
     const onSubmit = (e) => {
         // using javascript spread to append todos
         e.preventDefault()
-        deleteTask({variables:{id:item.id}})
-        // setTasks(tasks.filter((element) => {
-        //     return element.id !== item.id
-        // }))
+        setTimeout(() => {
+            deleteTask({variables:{id:item.id}})
+            setTasks(taskData)
+            setTasks(tasks.filter((element) => {
+            return element.id !== item.id
+        }))
+        }, 1000)
     }
 
     return (
@@ -46,7 +49,7 @@ const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    <MDTypography variant="h4" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography>
+                    <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

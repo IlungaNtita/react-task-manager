@@ -11,7 +11,7 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Col = ({ isOver, children, createTask, setTasks, tasks }) => {
+const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
     // ui
     const [controller,] = useMaterialUIController();
     const {
@@ -28,8 +28,10 @@ const Col = ({ isOver, children, createTask, setTasks, tasks }) => {
                 } 
             }
         )
+        console.log(taskData)
+        setTasks(taskData)
     }
-    
+
     return (
         <div>
             <Card id="delete-account" className="gradient-border" style={{borderRadius: "20px", backgroundColor: "#313958"}}>

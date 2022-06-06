@@ -44,7 +44,8 @@ function Tasks() {
   const [taskUpdate] = useMutation(UPDATE_TASK,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql
-    ]},);
+    ]},
+  );
   const [taskDelete] = useMutation(DELETE_TASK,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql

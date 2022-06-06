@@ -12,10 +12,15 @@ const Homepage = ({
     updateTask,
     deleteTask}) => {
     const [tasks, setTasks] = useState(taskData)
-    // useEffect(() => {
-    // 	// Start the seconds and save seconds to the respective item
-    //     setTasks(taskData);
-  	// }, [taskData]);
+    const [updated, setUpdated] = useState(false)
+    useEffect(() => {
+    	// update tasks once an tem has been updated
+        if(updated === true){
+            setTasks(taskData);
+            console.log(taskData)
+            setUpdated(false)
+        }
+  	}, []);
 
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
@@ -50,7 +55,7 @@ const Homepage = ({
                             </MDTypography>
 
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col createTask={createTask} setTasks={setTasks} tasks={tasks}> 
+                                <Col createTask={createTask} setTasks={setTasks} tasks={tasks} taskData={taskData}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item
@@ -64,7 +69,9 @@ const Homepage = ({
                                                         setTasks={setTasks}
                                                         createTask={createTask}
                                                         updateTask={updateTask}
-                                                        deleteTask={deleteTask}/>
+                                                        deleteTask={deleteTask}
+                                                        updated={updated}
+                                                        setUpdated={setUpdated}/>
                                                         )}
                                 </Col>
                             </DropWrapper>

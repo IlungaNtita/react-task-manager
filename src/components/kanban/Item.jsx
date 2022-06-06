@@ -14,6 +14,8 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
     createTask,
     updateTask,
     deleteTask,
+    updated,
+    setUpdated,
     taskData}) => {
     const ref = useRef(null);
     const [toggle, setToggle] = useState(true);
@@ -58,17 +60,33 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
     const [titleInput, setTitleInput] = useState(item.title);
     const [contentInput, setContentInput] = useState(item.description);
     const handleUpdate = () => {
-        updateTask(
-            {
-                variables: {
-                    id:item.id,
-                    title:titleInput,
-                    description:contentInput,
+        setTasks(
+            tasks.map((element) => {
+                if(element.id === item.id ){
+                    return { ...element, title: titleInput, description: contentInput }
                 }
-            }
+                return element;
+            })
         )
-        console.log(titleInput, "titleInput", item.id, "item title", item.title)
-        setToggle(true)
+       
+        
+            
+        setTimeout(() => {
+            updateTask(
+                {
+                    variables: {
+                        id:item.id,
+                        title:titleInput,
+                        description:contentInput,
+                    }
+                }
+            )
+
+            console.log(titleInput, "titleInput", item.id, "item title", item.title)
+            setUpdated(false)
+            setToggle(true)
+        }, 2000)
+
     };
 
     function titleHandleChange(event) {
@@ -86,61 +104,58 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
     drag(drop(ref));
     
     useEffect(() => {
-        let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
-        if(item && item.status === "Done" && localTask.minutes)	{
-            
-            updateTask(
-                {
-                    variables: {
-                        id:item.id,
-                        minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
-                        status:"Done",
-                        icon:"✅"
+        if(item){
+            let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+            if((item && item.status === "Done" && localTask) && (localTask.minutes || localTask.seconds || localTask.hours) )	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                updateTask(
+                    {
+                        variables: {
+                            id:item.id,
+                            minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
+                            status:"Done",
+                            icon:"✅"
+                        }
                     }
-                }
-            )
-            console.log("worked")
-            // setTimeout(() => {
-            //     setTasks(taskData)
-            // }, 1000)
-        }
-        else if(item && item.status === "In Progress")	{
-            updateTask(
-                {
-                    variables: {
-                        id:item.id,
-                        minutes: localTask.minutes, 
-                        hours: localTask.hours, 
-                        seconds: localTask.seconds,
-                        status:"In Progress",
-                        icon:"⏱️"
+                )
+                console.log("Done worked")
+            }
+            else if((item && item.status === "In Progress" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                updateTask(
+                    {
+                        variables: {
+                            id:item.id,
+                            minutes: localTask.minutes, 
+                            hours: localTask.hours, 
+                            seconds: localTask.seconds,
+                            status:"In Progress",
+                            icon:"⏱️"
+                        }
                     }
-                }
-            )
-            console.log("worked")
-            // setTimeout(() => {
-            //     setTasks(taskData)
-            // }, 1000)
-        }
-        else if(item && item.status === "To Do" && localTask)	{
-            updateTask(
-                {
-                    variables: {
-                        id:item.id,
-                        minutes: localTask.minutes,
-                        hours: localTask.hours, 
-                        seconds: localTask.seconds,
-                        status:"To Do",
-                        icon:"⭕️"
-                    }
-                }
-            )
-            console.log("worked")
-            // setTimeout(() => {
-            //     setTasks(taskData)
-            // }, 1000)
+                )
+                console.log("In Progress worked")
+            }
+            // else if(item && item.status === "To Do" && localTask && localTask.minutes)	{
+            //     let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+            //     updateTask(
+            //         {
+            //             variables: {
+            //                 id:item.id,
+            //                 minutes: localTask.minutes,
+            //                 hours: localTask.hours, 
+            //                 seconds: localTask.seconds,
+            //                 status:"To Do",
+            //                 icon:"⭕️"
+            //             }
+            //         }
+            //     )
+            //     console.log("To Do worked")
+            // }
         }
     }, [])
+
+    
     return (
             status !== undefined ?
             <Fragment>
@@ -202,6 +217,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                             onClose={onClose}
                             show={show}
                             deleteTask={deleteTask}
+                            taskData={taskData}
                         />
                     </div>
                 }
