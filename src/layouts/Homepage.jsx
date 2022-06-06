@@ -12,10 +12,11 @@ const Homepage = ({
     updateTask,
     deleteTask}) => {
     const [tasks, setTasks] = useState(taskData)
-    useEffect(() => {
-    	// Start the seconds and save seconds to the respective item
-        setTasks(taskData);
-  	}, [taskData]);
+    // useEffect(() => {
+    // 	// Start the seconds and save seconds to the respective item
+    //     setTasks(taskData);
+  	// }, [taskData]);
+
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
 
@@ -37,7 +38,6 @@ const Homepage = ({
     };
 
     
-    // setTimeout(() => setTasks(data.allTasks), 1000);
     return (
         <div className="row">
             { statuses ?
@@ -50,7 +50,7 @@ const Homepage = ({
                             </MDTypography>
 
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col createTask={createTask} setTasks={setTasks} tasks={taskData.allTasks}> 
+                                <Col createTask={createTask} setTasks={setTasks} tasks={tasks}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item
@@ -58,8 +58,9 @@ const Homepage = ({
                                                         item={i} 
                                                         index={idx} 
                                                         moveItem={moveItem} 
-                                                        status={s} 
-                                                        tasks={taskData.allTasks}
+                                                        status={s}
+                                                        taskData={taskData}
+                                                        tasks={tasks}
                                                         setTasks={setTasks}
                                                         createTask={createTask}
                                                         updateTask={updateTask}

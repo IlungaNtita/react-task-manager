@@ -3,7 +3,7 @@ import formatTime from 'utils/formatTime'
 import { useSelector, useDispatch } from 'react-redux'
 import { decrement, increment, counterSlice } from 'store/counterSlice'
 
-const StopWatch = ({ theme, setTasks, tasks, item }) => {
+const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	const [seconds, setSeconds] = useState(item.seconds)
 	const [minutes, setMinutes] = useState(item.minutes)
 	const [hours, setHours] = useState(item.hours)
@@ -41,6 +41,7 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 			}, 500)
 			handlePause()
 			console.log("localTask",localTask, "item:", item.seconds)
+			setTasks(taskData)
 		}
   	}, []);
 

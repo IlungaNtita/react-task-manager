@@ -1,4 +1,3 @@
-import { useState } from "react";
 // import Modal from "react-modal";
 import MDButton from "components/MDButton";
 // import StopWatch from "./StopWatch";
@@ -13,18 +12,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-// Focus React components
-// import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
-import TextField from '@mui/material/TextField';
-// Focus React context
 import {
   useMaterialUIController,
 } from "context";
 
 const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
     // ui
-    const [controller, dispatch] = useMaterialUIController();
+    const [controller] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
@@ -36,14 +30,6 @@ const Window = ({ show, onClose, item, setTasks, tasks, deleteTask }) => {
         // setTasks(tasks.filter((element) => {
         //     return element.id !== item.id
         // }))
-    }
-
-    const style = () => {
-        if(darkMode){
-            return "red"
-        } else {
-            return "blue"
-        }
     }
 
     return (

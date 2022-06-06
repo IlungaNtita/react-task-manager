@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../../data/types";
@@ -13,7 +13,8 @@ import CheckIcon from '@mui/icons-material/Check';
 const Item = ({ item, index, moveItem, status, setTasks, tasks,
     createTask,
     updateTask,
-    deleteTask}) => {
+    deleteTask,
+    taskData}) => {
     const ref = useRef(null);
     const [toggle, setToggle] = useState(true);
     const [, drop] = useDrop({
@@ -84,6 +85,62 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
 
     drag(drop(ref));
     
+    useEffect(() => {
+        let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+        if(item && item.status === "Done" && localTask.minutes)	{
+            
+            updateTask(
+                {
+                    variables: {
+                        id:item.id,
+                        minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
+                        status:"Done",
+                        icon:"✅"
+                    }
+                }
+            )
+            console.log("worked")
+            // setTimeout(() => {
+            //     setTasks(taskData)
+            // }, 1000)
+        }
+        else if(item && item.status === "In Progress")	{
+            updateTask(
+                {
+                    variables: {
+                        id:item.id,
+                        minutes: localTask.minutes, 
+                        hours: localTask.hours, 
+                        seconds: localTask.seconds,
+                        status:"In Progress",
+                        icon:"⏱️"
+                    }
+                }
+            )
+            console.log("worked")
+            // setTimeout(() => {
+            //     setTasks(taskData)
+            // }, 1000)
+        }
+        else if(item && item.status === "To Do" && localTask)	{
+            updateTask(
+                {
+                    variables: {
+                        id:item.id,
+                        minutes: localTask.minutes,
+                        hours: localTask.hours, 
+                        seconds: localTask.seconds,
+                        status:"To Do",
+                        icon:"⭕️"
+                    }
+                }
+            )
+            console.log("worked")
+            // setTimeout(() => {
+            //     setTasks(taskData)
+            // }, 1000)
+        }
+    }, [])
     return (
             status !== undefined ?
             <Fragment>
@@ -106,7 +163,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                         <MDTypography sx={{ fontSize: 16 }} gutterBottom>
                             {item.icon}
                         </MDTypography>
-                        <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
+                        <StopWatch item={item} tasks={tasks} setTasks={setTasks} taskData={taskData} updateTask={updateTask}/>
                     </div>
                     :
                     <div onDoubleClick={() => setToggle(true)}>

@@ -36,16 +36,16 @@ import { TASK_CREATE, UPDATE_TASK, DELETE_TASK } from "../../graphql/mutations";
 
 function Tasks() {
   const { loading:tasksLoading, error:tasksError, data:taskData } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
-  const [taskCreate, { data:taskCreateData }] = useMutation(TASK_CREATE,{
+  const [taskCreate] = useMutation(TASK_CREATE,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql
     ]},
   );
-  const [taskUpdate, { data:taskUpdateData }] = useMutation(UPDATE_TASK,{
+  const [taskUpdate] = useMutation(UPDATE_TASK,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql
     ]},);
-  const [taskDelete, { data:taskDeleteData }] = useMutation(DELETE_TASK,{
+  const [taskDelete] = useMutation(DELETE_TASK,{
     refetchQueries: [
       {query: ALL_TASKS}, // DocumentNode object parsed with gql
     ]},);
