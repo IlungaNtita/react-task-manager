@@ -38,9 +38,9 @@ Coded by www.creative-tim.com
 // Focus React layouts
 import Dashboard from "layouts/dashboard";
 // import Tables from "layouts/tables";
-import Billing from "layouts/billing";
+// import Billing from "layouts/billing";
 // import Notifications from "layouts/notifications";
-// import Profile from "layouts/profile";
+import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
 import Tasks from "layouts/Tasks";
@@ -73,22 +73,30 @@ const routes = [
   //   route: "/billing",
   //   component: <Billing />,
   // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign In",
-  //   key: "sign-in",
-  //   icon: <Icon fontSize="small">login yeah</Icon>,
-  //   route: "/authentication/sign-in",
-  //   component: <SignIn />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign Up",
-  //   key: "sign-up",
-  //   icon: <Icon fontSize="small">assignment</Icon>,
-  //   route: "/authentication/sign-up",
-  //   component: <SignUp />,
-  // },
+  {
+    type: "collapse",
+    // name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+  },
+  {
+    type: "collapse",
+    // name: "Sign Up",
+    key: "sign-up",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/sign-up",
+    component: <SignUp />,
+  },
+  {
+    type: "collapse",
+    // name: "Sign Up",
+    key: "profile",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
 ];
 
 export default routes;

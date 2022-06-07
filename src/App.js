@@ -115,8 +115,15 @@ export default function App() {
         return getRoutes(route.collapse);
       }
 
+      if (route.name === "Sign In") {
+        console.log(route)
+        return <Route/>;
+        
+      }
       if (route.route) {
+        // console.log(route)
         return <Route exact path={route.route} element={route.component} key={route.key} />;
+        
       }
 
       return null;

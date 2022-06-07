@@ -12,7 +12,7 @@ import {
 } from "context";
 
 const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
-    // ui
+    // UI 
     const [controller,] = useMaterialUIController();
     const {
         darkMode,

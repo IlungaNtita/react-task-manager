@@ -42,7 +42,7 @@ function SidenavCollapse({ icon, name, active, ...rest }) {
 
   return (
     <ListItem component="li">
-      <MDBox
+      {name ? <MDBox
         {...rest}
         sx={(theme) =>
           collapseItem(theme, {
@@ -77,7 +77,7 @@ function SidenavCollapse({ icon, name, active, ...rest }) {
             })
           }
         />
-      </MDBox>
+      </MDBox> : <p></p>}
     </ListItem>
   );
 }
