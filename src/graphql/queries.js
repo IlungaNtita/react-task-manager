@@ -32,3 +32,12 @@ export const TASK = gql`
   }
 `;
 
+export const WHOAMI = gql`
+  query whoami {
+    whoami{
+      id
+      username
+      password
+    }
+  }
+`

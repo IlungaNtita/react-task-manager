@@ -14,6 +14,7 @@ Coded by www.creative-tim.com
 */
 
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -21,13 +22,13 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
+// import Grid from "@mui/material/Grid";
+// import MuiLink from "@mui/material/Link";
 
 // @mui icons
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import GitHubIcon from "@mui/icons-material/GitHub";
+// import GoogleIcon from "@mui/icons-material/Google";
 
 // Focus React components
 import MDBox from "components/MDBox";
@@ -41,11 +42,42 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
+import {LOGIN_USER} from "graphql/mutations"
+
+import {WHOAMI} from "graphql/queries"
+
+import { useMutation } from "@apollo/client";
+
 function Basic() {
+  const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
+  const [loginUser, { data:loginUserData, loading:loginUserLoading, error:loginUserError }] = useMutation(LOGIN_USER,{
+    refetchQueries: [
+      {query: WHOAMI}, // DocumentNode object parsed with gql
+    ]},
+  );
+  const onLogin = () => {
+    loginUser(
+      {   
+        variables: { 
+          username:username, 
+          password: password,
+        } 
+      }
+    )
+    setTimeout(() => {
+      if(!loginUserError && !loginUserLoading){
+        if(loginUserData){
+          localStorage.setItem("userToken", loginUserData.tokenAuth.token)
+          console.log(loginUserData.tokenAuth.token)
+        }
+      }
+    }, 1000)
+  }
+  
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -84,10 +116,23 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput 
+                type="username" 
+                label="Username" 
+                defaultValue={username}
+                onChange={e => setUsername(e.target.value)}
+                autocomplete
+                fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput 
+                type="password" 
+                label="Password"
+                defaultValue={password} 
+                onChange={e => setPassword(e.target.value)}
+                autocomplete
+                fullWidth 
+                />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,7 +147,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" onClick={onLogin} fullWidth>
                 sign in
               </MDButton>
             </MDBox>

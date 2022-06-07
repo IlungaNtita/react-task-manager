@@ -104,9 +104,9 @@ export const DELETE_TASK = gql`
 
 export const CREATE_USER = gql`
     mutation createUser(
-        $username:String,
-        $password:String,
-        $email:String,
+        $username:String!,
+        $password:String!,
+        $email:String!,
         ) {
         createUser(username: $username, password: $password, email: $email) {
             refreshToken
@@ -122,7 +122,7 @@ export const CREATE_USER = gql`
 `;
 
 export const VERIFY_TOKEN = gql`
-    mutation verifyToken($token:String) {
+    mutation verifyToken($token:String!) {
         verifyToken(token: $token) {
             payload
         }
@@ -130,7 +130,7 @@ export const VERIFY_TOKEN = gql`
 `;
 
 export const REFRESH_TOKEN = gql`
-    mutation refreshToken($refreshToken:String) {
+    mutation refreshToken($refreshToken:String!) {
         refreshToken(refreshToken: "<refresh_token>") {
             token
         }
@@ -138,10 +138,10 @@ export const REFRESH_TOKEN = gql`
 `;
 
 export const LOGIN_USER = gql`
-    mutation loginUser($username:String, $password:String) {
+    mutation loginUser($username:String!, $password:String!) {
         tokenAuth(username: $username, password: $password) {
             token
-            refreshToken
+            # refreshToken
             payload
         }
     }

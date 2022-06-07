@@ -83,9 +83,6 @@ function Tasks() {
                   updateTaskTime={taskUpdateTime}
                   deleteTask={taskDelete}
                   />
-                {/* {data.allTasks.map(s => {
-                    return (<h1>{s.icon}</h1>)})
-                } */}
               </DndProvider>
           </Grid>
         </Grid>
