@@ -11,27 +11,29 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Col = ({ isOver, children, setTasks, tasks }) => {
+const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
     // ui
-    const [controller, dispatch] = useMaterialUIController();
+    const [controller,] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
 
     const className = isOver ? " highlight-region" : "";
-    const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = {id: id, 
-        title:"New task (Double click to edit)", 
-        content: "", 
-        status: "To Do", 
-        icon: "⭕️",
-        hours:0, 
-        minutes:0, 
-        seconds:0}
 
     const addTask = () => {
-        setTasks([...tasks, newTask])
+        createTask(
+            {   variables: { 
+                    title:"New task (Double click to edit)", 
+                    description: "",
+                    status: "To Do",
+                    icon: "⭕️"
+                } 
+            }
+        )
+        console.log(taskData)
+        setTasks(taskData)
     }
+
     return (
         <div>
             <Card id="delete-account" className="gradient-border" style={{borderRadius: "20px", backgroundColor: "#313958"}}>

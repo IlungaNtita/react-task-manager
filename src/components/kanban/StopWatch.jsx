@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react'
-import formatTime from 'utils/formatTime'
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment, counterSlice } from 'store/counterSlice'
+import React, { useState, useRef, useEffect } from 'react'
+// import formatTime from 'utils/formatTime'
+// import { useSelector, useDispatch } from 'react-redux'
+// import { decrement, increment, counterSlice } from 'store/counterSlice'
 
-const StopWatch = ({ theme, setTasks, tasks, item }) => {
+const StopWatch = ({ theme, setTasks, tasks, item, updateTask, taskData }) => {
 	const [seconds, setSeconds] = useState(item.seconds)
 	const [minutes, setMinutes] = useState(item.minutes)
 	const [hours, setHours] = useState(item.hours)
 	const [isPaused, setIsPaused] = useState(false)
 	const countRef = useRef(null)
+	const localData = useRef({seconds: seconds, minutes:minutes, hours:hours})
 
 	const handleStart = () => {
 		setIsPaused(true)
@@ -24,23 +25,25 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 		setIsPaused(false)
 	}
 
+	localData.current = JSON.parse(localStorage.getItem(`task_${item.id}`))
+
 	useEffect(() => {
     	// pause seconds
 		if(item && item.status === "Done")	{
-			let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+			console.log(localData.current, "from stopwatch")
 			setTimeout(() => {
 				setTasks(tasks.map((element) => {
-				    console.log("localTask localTask.seconds",localTask["seconds"])
+				    console.log("localData.current localData.current.seconds",localData.current["seconds"])
 				    if(element.id === item.id ){
 					    return {
-						    ...element, minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds
+						    ...element, minutes: localData.current.minutes, hours: localData.current.hours, seconds: localData.current.seconds
 					    }
 				    }
 				    return element;
 			    }))
-			}, 500)
+			}, 1000)
 			handlePause()
-			console.log("localTask",localTask, "item:", item.seconds)
+			console.log("localData.current",localData.current, "item:", item.seconds)
 		}
   	}, []);
 
@@ -50,7 +53,6 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 			const data = {seconds: seconds, minutes:minutes, hours:hours}
 			if(seconds >= 0 && isPaused === true){
 				localStorage.setItem(`task_${item.id}`, JSON.stringify(data))
-				console.log("localStorage", localStorage.getItem(`task_${item.id}`))
 			}
 		}
 
@@ -90,11 +92,19 @@ const StopWatch = ({ theme, setTasks, tasks, item }) => {
 	return (
 		<div className="app">
 			<div className='stopwatch-card'>
+				{(item.status === "Done" || "To Do") && localData.current
+				?
+				<p className='text-muted'>
+					{localData.current.hours > 0 ? <span className='mr-2'>{localData.current.hours} hours</span> : <span></span>}
+					{localData.current.minutes > 0 ? <span className='mr-2'>{localData.current.minutes} min</span> : <span></span>}
+					{localData.current.seconds > 0 ? <span>{localData.current.seconds} sec</span> : <span>0 sec</span>}
+				</p>
+				:
 				<p className='text-muted'>
 					{hours > 0 ? <span className='mr-2'>{hours} hours</span> : <span></span>}
 					{minutes > 0 ? <span className='mr-2'>{minutes} min</span> : <span></span>}
 					{seconds > 0 ? <span>{seconds} sec</span> : <span>0 sec</span>}
-				</p>
+				</p>}
 			</div>
 		</div>
 	);

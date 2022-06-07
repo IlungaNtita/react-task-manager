@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import Window from "./Window";
 import ITEM_TYPE from "../../data/types";
@@ -8,26 +8,16 @@ import MDTypography from "components/MDTypography";
 import TextField from '@mui/material/TextField';
 import MDButton from "components/MDButton";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {
-  useQuery,
-  gql
-} from "@apollo/client";
-import { Link } from "react-router-dom";
+import CheckIcon from '@mui/icons-material/Check';
 
-const ALL_TASKS = gql`
-  query AllTasks {
-    allTasks {
-      id
-      title
-      description
-      hour
-      minute
-      second
-    }
-  }
-`;
-
-const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
+const Item = ({ item, index, moveItem, status, setTasks, tasks,
+    createTask,
+    updateTask,
+    updateTaskTime,
+    deleteTask,
+    updated,
+    setUpdated,
+    taskData}) => {
     const ref = useRef(null);
     const [toggle, setToggle] = useState(true);
     const [, drop] = useDrop({
@@ -69,7 +59,35 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     });
 
     const [titleInput, setTitleInput] = useState(item.title);
-    const [contentInput, setContentInput] = useState(item.content);
+    const [contentInput, setContentInput] = useState(item.description);
+    const handleUpdate = () => {
+        setTasks(
+            tasks.map((element) => {
+                if(element.id === item.id ){
+                    return { ...element, title: titleInput, description: contentInput }
+                }
+                return element;
+            })
+        )
+   
+        setTimeout(() => {
+            updateTask(
+                {
+                    variables: {
+                        id:item.id,
+                        title:titleInput,
+                        description:contentInput,
+                        status:item.status
+                    }
+                }
+            )
+
+            console.log(titleInput, "titleInput", item.id, "item title", item.title)
+            setUpdated(false)
+            setToggle(true)
+        }, 2000)
+
+    };
 
     function titleHandleChange(event) {
         setTitleInput(event.target.value);
@@ -84,8 +102,61 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
     const onClose = () => setShow(false);
 
     drag(drop(ref));
-    const { loading, error, data } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
-    if (error) return `Error! ${error}`;
+    
+    useEffect(() => {
+        if(item){
+            let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+            if((item && item.status === "Done" && localTask) && (localTask.minutes || localTask.seconds || localTask.hours) )	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                setTimeout(() => {
+                    updateTaskTime(
+                        {
+                            variables: {
+                                id:item.id,
+                                minutes: localTask.minutes, hours: localTask.hours, seconds: localTask.seconds,
+                                status:"Done",
+                                icon:item.icon
+                            }
+                        }
+                    )
+                    console.log("Done worked", taskData)
+                }, 1500)
+            }
+            else if((item && item.status === "In Progress" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                updateTaskTime(
+                    {
+                        variables: {
+                            id:item.id,
+                            minutes: localTask.minutes, 
+                            hours: localTask.hours, 
+                            seconds: localTask.seconds,
+                            status:"In Progress",
+                            icon:item.icon
+                        }
+                    }
+                )
+                console.log("In Progress worked", taskData)
+            }
+            else if((item && item.status === "To Do" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
+                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+                updateTaskTime(
+                    {
+                        variables: {
+                            id:item.id,
+                            minutes: localTask.minutes,
+                            hours: localTask.hours,
+                            seconds: localTask.seconds,
+                            status:"To Do",
+                            icon:item.icon
+                        }
+                    }
+                )
+                console.log("In Progress worked", taskData)
+            }
+        }
+    }, [])
+
     
     return (
             status !== undefined ?
@@ -101,15 +172,15 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                     {toggle === true ?
                     <div onDoubleClick={() => setToggle(false)}>
                         <MDTypography sx={{ fontSize: 18 }}  gutterBottom>
-                        {item.title}
+                            {item.title}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 15 }}  gutterBottom>
-                            {item.content}
+                            {item.description}
                         </MDTypography>
                         <MDTypography sx={{ fontSize: 16 }} gutterBottom>
                             {item.icon}
                         </MDTypography>
-                        <StopWatch item={item} tasks={tasks} setTasks={setTasks} key={item.id}/>
+                        <StopWatch item={item} tasks={tasks} setTasks={setTasks} taskData={taskData} updateTask={updateTask}/>
                     </div>
                     :
                     <div onDoubleClick={() => setToggle(true)}>
@@ -118,6 +189,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         id="standard-textarea"
                         label="Title"
                         multiline
+                        fullWidth
                         maxRows={4}
                         defaultValue={titleInput}
                         onChange={titleHandleChange}
@@ -127,6 +199,7 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                         id="standard-multiline-static"
                         label="Content"
                         multiline
+                        fullWidth
                         rows={4}
                         onChange={contentHandleChange}
                         defaultValue={contentInput}
@@ -136,6 +209,9 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                             <MDButton onClick={onOpen} variant="outlined" color="error" className="mt-2 mr-2" startIcon={<DeleteIcon />}>
                                 Delete
                             </MDButton>
+                            <MDButton onClick={handleUpdate} variant="outlined" color="success" className="mt-2 mr-2" startIcon={<CheckIcon />}>
+                                Save
+                            </MDButton>
                         </div>
                         <Window
                             item={item} 
@@ -144,6 +220,8 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks }) => {
                             key={item.id}
                             onClose={onClose}
                             show={show}
+                            deleteTask={deleteTask}
+                            taskData={taskData}
                         />
                     </div>
                 }

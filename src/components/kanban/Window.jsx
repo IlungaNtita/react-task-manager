@@ -1,4 +1,3 @@
-import { useState } from "react";
 // import Modal from "react-modal";
 import MDButton from "components/MDButton";
 // import StopWatch from "./StopWatch";
@@ -13,18 +12,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-// Focus React components
-// import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
-import TextField from '@mui/material/TextField';
-// Focus React context
 import {
   useMaterialUIController,
 } from "context";
 
-const Window = ({ show, onClose, item, setTasks, tasks }) => {
+const Window = ({ show, onClose, item, setTasks, tasks, deleteTask, taskData }) => {
     // ui
-    const [controller, dispatch] = useMaterialUIController();
+    const [controller] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
@@ -32,17 +26,13 @@ const Window = ({ show, onClose, item, setTasks, tasks }) => {
     const onSubmit = (e) => {
         // using javascript spread to append todos
         e.preventDefault()
-        setTasks(tasks.filter((element) => {
+        setTimeout(() => {
+            deleteTask({variables:{id:item.id}})
+            setTasks(taskData)
+            setTasks(tasks.filter((element) => {
             return element.id !== item.id
         }))
-    }
-
-    const style = () => {
-        if(darkMode){
-            return "red"
-        } else {
-            return "blue"
-        }
+        }, 1000)
     }
 
     return (
@@ -59,7 +49,7 @@ const Window = ({ show, onClose, item, setTasks, tasks }) => {
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    <MDTypography variant="h4" color="dark" >Are you sure you you want to delete {item.title}?</MDTypography>
+                    <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>

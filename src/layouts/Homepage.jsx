@@ -3,12 +3,26 @@ import DropWrapper from "../components/kanban/DropWrapper";
 import Col from "../components/kanban/Col";
 import { statuses } from "../data";
 // import Card from "@mui/material/Card";
-import { useState } from "react";
-import { data } from "../data";
+import { useState, useEffect } from "react";
 import MDTypography from "components/MDTypography";
 
-const Homepage = () => {
-    const [tasks, setTasks] = useState(data)
+const Homepage = ({
+    taskData, 
+    createTask,
+    updateTask,
+    updateTaskTime,
+    deleteTask}) => {
+    const [tasks, setTasks] = useState(taskData)
+    const [updated, setUpdated] = useState(false)
+    useEffect(() => {
+    	// update tasks once an tem has been updated
+        if(updated === true){
+            setTasks(taskData);
+            console.log(taskData)
+            setUpdated(false)
+        }
+  	}, []);
+
     const onDrop = (item, monitor, status) => {
         const mapping = statuses.find(si => si.status === status);
 
@@ -29,6 +43,7 @@ const Homepage = () => {
         });
     };
 
+    
     return (
         <div className="row">
             { statuses ?
@@ -41,7 +56,7 @@ const Homepage = () => {
                             </MDTypography>
 
                             <DropWrapper onDrop={onDrop} status={s.status}>
-                                <Col setTasks={setTasks} tasks={tasks}> 
+                                <Col createTask={createTask} setTasks={setTasks} tasks={tasks} taskData={taskData}> 
                                 {tasks
                                     .filter(i => i.status === s.status)
                                     .map((i, idx) => <Item
@@ -49,9 +64,16 @@ const Homepage = () => {
                                                         item={i} 
                                                         index={idx} 
                                                         moveItem={moveItem} 
-                                                        status={s} 
-                                                        tasks={tasks} 
-                                                        setTasks={setTasks}/>
+                                                        status={s}
+                                                        taskData={taskData}
+                                                        tasks={tasks}
+                                                        setTasks={setTasks}
+                                                        createTask={createTask}
+                                                        updateTask={updateTask}
+                                                        updateTaskTime={updateTaskTime}
+                                                        deleteTask={deleteTask}
+                                                        updated={updated}
+                                                        setUpdated={setUpdated}/>
                                                         )}
                                 </Col>
                             </DropWrapper>
