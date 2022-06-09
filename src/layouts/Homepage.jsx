@@ -8,12 +8,16 @@ import MDTypography from "components/MDTypography";
 import SprintCarousel from "components/kanban/SprintCarousel";
 import Grid from "@mui/material/Grid";
 
+import { useQuery } from "@apollo/client";
+import { WHOAMI } from "graphql/queries";
+
 const Homepage = ({
     taskData, 
     createTask,
     updateTask,
     updateTaskTime,
     deleteTask}) => {
+    const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
     const [tasks, setTasks] = useState(taskData)
     const [updated, setUpdated] = useState(false)
     useEffect(() => {
@@ -48,7 +52,10 @@ const Homepage = ({
     
     return (
         <div>
-            <SprintCarousel/>
+            {!whoAmILoading && whoAmIData && whoAmIData.whoami?
+            <SprintCarousel sprints={whoAmIData.whoami.sprintSet}/>
+            :
+            <p></p>}
             {/* <div style={{ width:1200 }}> */}
                 <Grid container justifyContent="center" className="mb-5" >
                     <Grid container justifyContent="center" className="mb-5" lg={10}>

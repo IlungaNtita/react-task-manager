@@ -36,9 +36,12 @@ import Projects from "layouts/dashboard/components/Projects";
 import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 import Sprint from "components/kanban/Sprint"
-function Dashboard() {
-  // const { sales, tasks } = reportsLineChartData;
+import { useQuery, useMutation } from "@apollo/client";
+import { WHOAMI } from "../../graphql/queries";
 
+function Dashboard() {
+  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
+  // console.log(whoAmIData.whoami.sprintSet)
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -106,14 +109,26 @@ function Dashboard() {
         </Grid>
         <MDBox>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
+            {/* <Grid item xs={12} md={6} lg={8}>
               <Projects />
             </Grid>
             <Grid item xs={12} md={6} lg={4}>
               <OrdersOverview />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={12} lg={12}>
-              <Sprint />
+              {whoAmIData && whoAmIData.whoami?
+                <Sprint sprints={whoAmIData.whoami.sprintSet}
+                />
+              :
+                whoAmIError ? 
+                <p>
+                    Something happened
+                </p>
+                :
+                <p>
+                    Loading...
+                </p>
+            }
             </Grid>
           </Grid>
         </MDBox>

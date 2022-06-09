@@ -47,6 +47,7 @@ import {LOGIN_USER} from "graphql/mutations"
 import {WHOAMI} from "graphql/queries"
 
 import { useMutation } from "@apollo/client";
+import { AUTH_TOKEN } from "constants"
 
 function Basic() {
   const navigate = useNavigate();
@@ -65,7 +66,11 @@ function Basic() {
         variables: { 
           username:username, 
           password: password,
-        } 
+        },
+        onCompleted: ({ tokenAuth }) => {
+          localStorage.setItem(AUTH_TOKEN, tokenAuth.token);
+          navigate('/');
+        }
       }
     )
     setTimeout(() => {

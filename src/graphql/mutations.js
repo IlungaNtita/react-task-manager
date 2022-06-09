@@ -11,10 +11,18 @@ export const TASK_CREATE = gql`
                     $hours:Int,
                     $minutes:Int,
                     $seconds:Int,
+                    $taskSprint:ID,
     ) {
         taskCreate(input:{
-            title:$title description: $description status: $status user: $user hours: $hours minutes:$minutes seconds:$seconds
-            icon: $icon 
+            title:$title, 
+            description: $description, 
+            status: $status, 
+            user: $user, 
+            hours: $hours, 
+            minutes:$minutes, 
+            seconds:$seconds,
+            icon: $icon, 
+            taskSprint: $taskSprint
         }) {
             task{
                 id
@@ -97,6 +105,62 @@ export const UPDATE_TASK_TIME = gql`
 export const DELETE_TASK = gql`
     mutation DeleteTask($id: ID) {
         taskDelete(id:$id) {
+            ok
+        }
+    }
+`;
+
+export const SPRINT_CREATE = gql`
+    mutation SprintCreate(
+        $title:String,
+        $description:String,
+        $status: String,
+        $user:ID,
+    ) {
+        sprintCreate(input:{
+            title:$title, 
+            description: $description, 
+            status: $status, 
+            user: $user, 
+        }) {
+            task{
+                id
+                title
+                description
+                status
+            }
+        }
+    }
+`;
+
+export const SPRINT_UPDATE= gql`
+    mutation TaskUpdate(
+        $id:ID!,
+        $title:String,
+        $status:String,
+        $description:String,
+    ) {
+        taskUpdate(
+            id:$id 
+            input: {
+                title:$title,
+                description: $description ,
+                status: $status ,
+            }
+        ) {
+            sprint {
+                id
+                title
+                description
+                status
+            }
+        }
+    }
+`;
+
+export const SPRINT_DELETE = gql`
+    mutation SprintDelete($id: ID) {
+        sprintDelete(id:$id) {
             ok
         }
     }

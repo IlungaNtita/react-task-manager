@@ -26,7 +26,8 @@ const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
                     title:"New task (Double click to edit)", 
                     description: "",
                     status: "To Do",
-                    icon: "⭕️"
+                    icon: "⭕️",
+                    taskSprint: localStorage.getItem("activeSprint")
                 } 
             }
         )

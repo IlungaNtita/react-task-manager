@@ -61,7 +61,7 @@ function Tasks() {
       <MDBox mt={6} mb={3}>
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={12}>
-              <h3>Loading tasks, this can take some time.</h3>
+              <div className="loader-3"></div>
           </Grid>
         </Grid>
       </MDBox>
