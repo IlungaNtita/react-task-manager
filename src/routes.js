@@ -37,9 +37,6 @@ Coded by www.creative-tim.com
 
 // Focus React layouts
 import Dashboard from "layouts/dashboard";
-// import Tables from "layouts/tables";
-// import Billing from "layouts/billing";
-// import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
@@ -55,7 +52,7 @@ const routes = [
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
-    component: <Dashboard />,
+    component: <Dashboard hello="hello"/>,
   },
   {
     type: "collapse",
@@ -65,14 +62,6 @@ const routes = [
     route: "/tasks",
     component: <Tasks />,
   },
-  // {
-  //   type: "collapse",
-  //   name: "Billing",
-  //   key: "billing",
-  //   icon: <Icon fontSize="small">receipt_long</Icon>,
-  //   route: "/billing",
-  //   component: <Billing />,
-  // },
   {
     type: "collapse",
     // name: "Sign In",

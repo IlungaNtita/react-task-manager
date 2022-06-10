@@ -6,19 +6,12 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDBadge from "components/MDBadge";
-import MDAvatar from "components/MDAvatar";
-
-// Images
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import { useMaterialUIController } from "context";
 import { useState } from "react";
-import Bill from "layouts/billing/components/Bill";
 import { WHOAMI } from "../../graphql/queries";
 import { SPRINT_CREATE, SPRINT_DELETE, SPRINT_UPDATE } from "../../graphql/mutations";
 import { useMutation } from "@apollo/client";
@@ -41,7 +34,7 @@ function Sprint({sprints}) {
 
         setActiveSprint(itemId)
         localStorage.setItem("activeSprint", itemId)
-        console.log("clicked", itemId)
+        // console.log("clicked", itemId)
         navigate('/tasks');
     }
     const onEdit = () => {
@@ -110,7 +103,7 @@ function Sprint({sprints}) {
         sprints.map((item) => 
             {
                 return {
-                    author: <Author key={item.id} component="a" onClick={() => handleElementClick(1)} image={team2} title={item.title} description={item.description} id={item.id}/>,
+                    author: <Author key={item.id} component="a" onClick={() => handleElementClick(1)} title={item.title} description={item.description} id={item.id}/>,
                     status: (
                     <MDBox onClick={() => handleElementClick(item.id)} ml={-1}>
                         <MDBadge component="a" onClick={() => handleElementClick(item.id)} badgeContent={item.status} color="success" variant="gradient" size="sm" />

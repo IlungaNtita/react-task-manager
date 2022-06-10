@@ -23,13 +23,7 @@ import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-// import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-// import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
-// Data
-// import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-// import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
 // Dashboard components
 import Projects from "layouts/dashboard/components/Projects";
@@ -40,7 +34,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { WHOAMI } from "../../graphql/queries";
 
 function Dashboard() {
-  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
+  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData,  } = useQuery(WHOAMI, { errorPolicy: 'all' });
   // console.log(whoAmIData.whoami.sprintSet)
   return (
     <DashboardLayout>
@@ -124,10 +118,8 @@ function Dashboard() {
                 <p>
                     Something happened
                 </p>
-                :
-                <p>
-                    Loading...
-                </p>
+                :                    
+                <div class="loader"></div>
             }
             </Grid>
           </Grid>

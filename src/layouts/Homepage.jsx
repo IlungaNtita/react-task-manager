@@ -96,7 +96,7 @@ const Homepage = ({
                             )
                         })
                     :
-                    <p>Loading...</p>
+                    <div class="loader"></div>
                     }
                     </Grid>
                 </Grid>

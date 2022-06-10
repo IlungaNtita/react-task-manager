@@ -32,11 +32,11 @@ function Bill({ name, company, email, vat, noGutter, description, status, delete
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
   const navigate = useNavigate()
-  const handleElementClick = () => {
-    localStorage.setItem("activeSprint", itemId)
-    console.log("clicked", itemId)
-    navigate('/tasks');
-  }
+  // const handleElementClick = () => {
+  //   localStorage.setItem("activeSprint", itemId)
+  //   console.log("clicked", itemId)
+  //   navigate('/tasks');
+  // }
   return (
     <MDBox
       component="li"
