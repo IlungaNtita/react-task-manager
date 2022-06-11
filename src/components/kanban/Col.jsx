@@ -11,7 +11,17 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
+const Col = ({ 
+    isOver,
+    children, 
+    createTask, 
+    setTasks, 
+    taskData,
+    activeSprint,
+    tasks,
+    created,
+    setCreated,
+ }) => {
     // UI 
     const [controller,] = useMaterialUIController();
     const {
@@ -27,12 +37,20 @@ const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
                     description: "",
                     status: "To Do",
                     icon: "⭕️",
-                    taskSprint: localStorage.getItem("activeSprint")
-                } 
+                    hours:0,
+                    minutes:0,
+                    seconds:0,
+                    taskSprint: activeSprint
+                },
+                onCompleted: () => {
+                    // const data = Object.assign(tasks, newdata);
+                    setTimeout(()=>{
+                        setCreated(true)
+                    }, 1000)    
+                    
+                }
             }
         )
-        console.log(taskData)
-        setTasks(taskData)
     }
 
     return (

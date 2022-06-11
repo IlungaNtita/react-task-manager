@@ -30,7 +30,19 @@ export const TASK_CREATE = gql`
                 description
                 hours
                 status
-                icon 
+                icon
+                taskSprint{
+                    taskSet{
+                        id
+                        title
+                        description
+                        status
+                        hours
+                        minutes
+                        seconds
+                        icon
+                    }
+                }
             }
         }
     }

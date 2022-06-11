@@ -22,13 +22,18 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import sprintTableData from "./sprintTableData"
 
+import Window from "./sprint/Window"
+import EditWindow from "./sprint/EditWindow"
+import AddItemWindow from "./sprint/AddItemWindow"
+
 function Sprint({sprints}) {
     const theId = localStorage.getItem("activeSprint") || "0"
     const [controller] = useMaterialUIController();
     const { darkMode } = controller;
     const [sprintData, setSprintData] = useState(sprints);
     const [activeSprint, setActiveSprint] = useState(theId);
-    
+    const [editableSprint, setEditableSprint] = useState();
+
     const navigate = useNavigate()
     const handleElementClick = (itemId) => {
 
@@ -40,18 +45,28 @@ function Sprint({sprints}) {
     const onEdit = () => {
         // using javascript spread to append todos
         setTimeout(() => {
-            sprintUpdate({variables:{id:activeSprint}})
+            sprintUpdate({variables:{id:editableSprint}})
         }, 1000)
     }
-
+    const onClose = () => {
+        setShowDelete(false);
+        setShowEdit(false);
+        setShowAdd(false);
+    }
+    
     const onDelete = () => {
         // using javascript spread to append todos
         setTimeout(() => {
-            sprintDelete({variables:{id:activeSprint}})
+            sprintDelete({variables:{id:editableSprint}})
+            onClose()
         }, 1000)
     }
     const { columns } = sprintTableData();
     const color = "success"
+    const [showDelete, setShowDelete] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
+    const [showAdd, setShowAdd] = useState(false);
+
     const Author = ({ image, title, description, id }) => (
         <MDBox key={id} onClick={() => handleElementClick(id)} display="flex" alignItems="center" lineHeight={1}>
             {/* <MDAvatar component="a" src={image} name={title} size="sm" /> */}
@@ -111,12 +126,28 @@ function Sprint({sprints}) {
                     ),
                     action: (
                         <div>
-                            <MDTypography onClick={onEdit} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="success" className="mr-2">
+                            <MDTypography onClick={() => {setShowEdit(true); setEditableSprint(item.id)}} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="success" className="mr-2">
                                 <Icon className="mr-1">edit</Icon>Edit
                             </MDTypography>
-                            <MDTypography onClick={onDelete} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="primary">
+                            <MDTypography onClick={() => {setShowDelete(true); setEditableSprint(item.id)}} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="primary">
                                 <Icon className="mr-1">delete</Icon>Delete
                             </MDTypography>
+                            <Window
+                                item={item} 
+                                onClose={onClose}
+                                show={showDelete}
+                                deleteItem={onDelete}
+                            />
+                            <EditWindow
+                                item={item} 
+                                onClose={onClose}
+                                show={showEdit}
+                            />
+                            <AddItemWindow
+                                item={item} 
+                                onClose={onClose}
+                                show={showAdd}
+                            />
                         </div>
                     
                     ),
@@ -201,7 +232,7 @@ function Sprint({sprints}) {
                 </Grid>
             </Grid>
             <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
-                <MDButton variant="gradient" color="dark" onClick={sprintCreate}>
+                <MDButton variant="gradient" color="dark" onClick={() => {setShowAdd(true)}}>
                 <Icon sx={{ fontWeight: "bold" }}>add</Icon>
                 &nbsp;Add Sprints
                 </MDButton>

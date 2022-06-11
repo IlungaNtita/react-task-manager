@@ -31,11 +31,14 @@ import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
 
 import Sprint from "components/kanban/Sprint"
 import { useQuery, useMutation } from "@apollo/client";
-import { WHOAMI } from "../../graphql/queries";
+import { WHOAMI } from "graphql/queries";
 
 function Dashboard() {
+  // const [activeUser]
   const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData,  } = useQuery(WHOAMI, { errorPolicy: 'all' });
-  // console.log(whoAmIData.whoami.sprintSet)
+  // if(!loading){
+
+  // }
   return (
     <DashboardLayout>
       <DashboardNavbar />

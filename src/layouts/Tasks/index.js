@@ -13,6 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useState, useEffect } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -31,31 +32,54 @@ import Homepage from "layouts/Homepage";
 import { DndProvider } from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import { useQuery, useMutation } from "@apollo/client";
-import { ALL_TASKS } from "../../graphql/queries";
+import { SPRINT } from "../../graphql/queries";
 import { TASK_CREATE, UPDATE_TASK, DELETE_TASK, UPDATE_TASK_TIME } from "../../graphql/mutations";
 
 function Tasks() {
-  const { loading:tasksLoading, error:tasksError, data:taskData } = useQuery(ALL_TASKS, { errorPolicy: 'all' });
+  const theId = localStorage.getItem("activeSprint") || 0
+  const [activeSprint, setActiveSprint] = useState(theId);
+  const { loading:sprintLoading, error:sprintError, data:sprintData } = useQuery(SPRINT, { 
+    variables:{
+      sprintId:activeSprint
+    },
+    errorPolicy: 'all' });
   const [taskCreate] = useMutation(TASK_CREATE,{
     refetchQueries: [
-      {query: ALL_TASKS}, // DocumentNode object parsed with gql
-    ]},
+      {query: SPRINT,
+        variables:{
+          sprintId:activeSprint
+        },
+      }, // DocumentNode object parsed with gql
+    ]}
   );
+
   const [taskUpdate] = useMutation(UPDATE_TASK,{
     refetchQueries: [
-      {query: ALL_TASKS}, // DocumentNode object parsed with gql
+      {query: SPRINT,
+        variables:{
+          sprintId:activeSprint
+        },
+      }, // DocumentNode object parsed with gql
     ]},
   );
   const [taskUpdateTime] = useMutation(UPDATE_TASK_TIME,{
     refetchQueries: [
-      {query: ALL_TASKS}, // DocumentNode object parsed with gql
+      {query: SPRINT,
+        variables:{
+          sprintId:activeSprint
+        },
+      }, // DocumentNode object parsed with gql
     ]},
   );
   const [taskDelete] = useMutation(DELETE_TASK,{
     refetchQueries: [
-      {query: ALL_TASKS}, // DocumentNode object parsed with gql
+      {query: SPRINT,
+        variables:{
+          sprintId:activeSprint
+        },
+      },
     ]},);
-  if (tasksLoading) return (
+  if (sprintLoading) return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mt={6} mb={3}>
@@ -68,8 +92,8 @@ function Tasks() {
       <Footer />
     </DashboardLayout>
   );
-  else if (tasksError) return <h2> ERROR...: {tasksError} </h2>;
-  if (!tasksLoading) return (
+  else if (sprintError) return <h2> ERROR...: {sprintError} </h2>;
+  if (!sprintLoading) return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mt={6} mb={3}>
@@ -77,11 +101,13 @@ function Tasks() {
           <Grid item xs={12} lg={12}>
               <DndProvider backend={HTML5Backend}>
                 <Homepage 
-                  taskData={taskData.allTasks} 
+                  taskData={sprintData.sprint.taskSet} 
                   createTask={taskCreate}
                   updateTask={taskUpdate}
                   updateTaskTime={taskUpdateTime}
                   deleteTask={taskDelete}
+                  activeSprint={activeSprint} 
+                  setActiveSprint={setActiveSprint}
                   />
               </DndProvider>
           </Grid>
