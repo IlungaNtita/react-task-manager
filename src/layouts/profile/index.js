@@ -29,9 +29,9 @@ import Footer from "examples/Footer";
 
 // Overview page components
 import Header from "layouts/profile/components/Header";
-// import PlatformSettings from "layouts/profile/components/PlatformSettings";
 
 function Overview() {
+
   return (
     <DashboardLayout>
       <DashboardNavbar />

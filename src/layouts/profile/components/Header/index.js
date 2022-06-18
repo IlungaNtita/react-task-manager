@@ -42,7 +42,7 @@ import { useQuery } from "@apollo/client";
 import {WHOAMI} from "graphql/queries"
 import { AUTH_TOKEN } from "constants"
 import { useNavigate } from 'react-router-dom';
-
+import Avatar from 'react-avatar';
 function Header({ children }) {
   const { loading:whoAmILoading, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ function Header({ children }) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
-
+  // console.log(whoAmIData.whoami)
 
 
   return (
@@ -105,12 +105,12 @@ function Header({ children }) {
       >
         <Grid container spacing={3} alignItems="center">
           <Grid item>
-            <MDAvatar src={burceMars} alt="profile-image" size="xl" shadow="sm" />
+            <Avatar name={whoAmIData.whoami.username} size="70" round={true}/>
           </Grid>
           <Grid item>
             <MDBox height="100%" mt={0.5} lineHeight={1}>
               <MDTypography variant="h5" fontWeight="medium">
-                Richard Davis
+                {whoAmIData.whoami.username}
               </MDTypography>
               <MDTypography variant="button" color="text" fontWeight="regular">
                 Premium
@@ -118,6 +118,7 @@ function Header({ children }) {
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
+            
             <MDTypography onClick={onLogout} component="a" variant="button" color="primary" fontWeight="regular">
               <Icon fontSize="small" className="mr-2">logout</Icon>Logout 
             </MDTypography>

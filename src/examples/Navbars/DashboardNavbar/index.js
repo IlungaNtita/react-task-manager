@@ -50,6 +50,9 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
 } from "context";
+import Avatar from 'react-avatar';
+import {WHOAMI} from "graphql/queries"
+import { useQuery } from "@apollo/client";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -57,6 +60,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const { loading:whoAmILoading, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
 
   useEffect(() => {
     // Setting the navbar type
@@ -134,7 +138,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
+                  {!whoAmILoading ?
+                  <Avatar name={whoAmIData.whoami.username} size="20" style={{fontSize: "50px"}}  round={true}/>:
                   <Icon sx={iconsStyle}>account_circle</Icon>
+                  }
                 </IconButton>
               </Link>
               <IconButton

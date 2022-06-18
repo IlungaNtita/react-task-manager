@@ -159,20 +159,6 @@ function Sprint({sprints}) {
             {query: WHOAMI}, // DocumentNode object parsed with gql
         ]},
     );
-
-    const onAdd = () => {
-        // using javascript spread to append todos
-        setTimeout(() => {
-            sprintCreate({
-                variables: {
-                    title:"New task (Double click to edit)", 
-                    description: "",
-                    status: "ACTIVE",
-                    user: localStorage.getItem("activeSprint")
-                }
-            })
-        }, 1000)
-    }
     
 
     // console.log(sprints, "from sprints")
@@ -229,6 +215,7 @@ function Sprint({sprints}) {
                 // item={item}
                 sprints={sprints}
                 onClose={onClose}
+                editableItem={editableSprint}
                 show={showDelete}
                 deleteItem={onDelete}
             />

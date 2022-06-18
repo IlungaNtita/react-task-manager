@@ -38,8 +38,17 @@ const EditWindow = ({ show, onClose, sprints, editableItem }) => {
             },
         ]}
     );
-
+    
+    // Function to edit a sprint
     const editSprint = () => {
+
+        if(title === ""){
+            setTitle(itemData.title)
+        }
+        if(description === ""){
+            setDescription(itemData.description)
+        }
+            
         setTimeout(() => {
             sprintUpdate(
                 {   variables: 
@@ -59,8 +68,8 @@ const EditWindow = ({ show, onClose, sprints, editableItem }) => {
         <MDSnackbar
             color="success"
             icon="check"
-            title="Sprint Created"
-            content="Your sprint has been succesfully created."
+            title="Sprint Updated"
+            content="Your sprint has been succesfully updated."
             open={successSB}
             onClose={closeSuccessSB}
             close={closeSuccessSB}
@@ -73,8 +82,9 @@ const EditWindow = ({ show, onClose, sprints, editableItem }) => {
             itemData = i
         }
     }
+
     return (
-        <div >
+        <div>
             <Dialog
                 open={show}
                 onClose={onClose}

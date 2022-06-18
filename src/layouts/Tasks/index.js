@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -40,7 +40,7 @@ function Tasks() {
   const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
   const theId = localStorage.getItem("activeSprint") || 0
   const [activeSprint, setActiveSprint] = useState(theId);
-  const { loading:sprintLoading, error:sprintError, data:sprintData } = useQuery(SPRINT, { 
+  const { loading:sprintLoading, error:sprintError, data:sprintData, refetch } = useQuery(SPRINT, { 
     variables:{
       sprintId:activeSprint
     },
@@ -82,6 +82,12 @@ function Tasks() {
       },
     ]}
   );
+
+  useMemo(() => {
+    refetch()
+    console.log("running", activeUser)
+  },[])
+
   if (sprintLoading) return (
     <DashboardLayout>
       <DashboardNavbar />

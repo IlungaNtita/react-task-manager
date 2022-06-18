@@ -14,7 +14,7 @@ import {
   useMaterialUIController,
 } from "context";
 
-const Window = ({ show, onClose, sprints, deleteItem }) => {
+const Window = ({ show, onClose, sprints, deleteItem, editableItem }) => {
     // ui
     const [controller] = useMaterialUIController();
     const {
@@ -34,6 +34,14 @@ const Window = ({ show, onClose, sprints, deleteItem }) => {
         close={closeInfoSB}
         />
     );
+
+    let itemData = {}
+    for(let i of sprints){
+        if(i.id === editableItem){
+            itemData = i
+        }
+    }
+
     return (
         <div >
             <Dialog
@@ -44,11 +52,11 @@ const Window = ({ show, onClose, sprints, deleteItem }) => {
                 
             ><div style={darkMode ? {backgroundColor: "#313958"} : {}} >
                 <DialogTitle id="alert-dialog-title">
-                {/* {`Delete ${item.title}`} */}
+                {`Delete ${itemData.title}`}
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    {/* <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography> */}
+                    <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{itemData.title}"?</MDTypography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
