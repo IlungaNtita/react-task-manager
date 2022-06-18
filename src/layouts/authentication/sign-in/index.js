@@ -22,13 +22,6 @@ import { Link } from "react-router-dom";
 // @mui material components
 import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
-// import Grid from "@mui/material/Grid";
-// import MuiLink from "@mui/material/Link";
-
-// @mui icons
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import GitHubIcon from "@mui/icons-material/GitHub";
-// import GoogleIcon from "@mui/icons-material/Google";
 
 // Focus React components
 import MDBox from "components/MDBox";
@@ -42,46 +35,65 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
-import {LOGIN_USER} from "graphql/mutations"
+import { LOGIN_USER } from "graphql/mutations"
 
-import {WHOAMI} from "graphql/queries"
+import { WHOAMI } from "graphql/queries"
 
-import { useMutation } from "@apollo/client";
+import { useMutation, useLazyQuery } from "@apollo/client";
 import { AUTH_TOKEN } from "constants"
+import { useUpdateUser } from "UserContext"
+import Alert from "components/kanban/Alert";
+import MDAlert from "components/MDAlert";
 
 function Basic() {
+  const updateActiveUser = useUpdateUser()
   const navigate = useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [showInvalidCred, setShowInvalidCred] = useState(false)
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const [whoAmI, { loading:whoAmILoading, data:whoAmIData }] = useLazyQuery (WHOAMI, { errorPolicy: 'all' });
+
   const [loginUser, { data:loginUserData, loading:loginUserLoading, error:loginUserError }] = useMutation(LOGIN_USER,{
     refetchQueries: [
       {query: WHOAMI}, // DocumentNode object parsed with gql
     ]},
   );
+
   const onLogin = () => {
-    loginUser(
-      {   
-        variables: { 
-          username:username, 
-          password: password,
-        },
-        onCompleted: ({ tokenAuth }) => {
-          localStorage.setItem(AUTH_TOKEN, tokenAuth.token);
-          navigate('/');
+    try{
+      loginUser(
+        {   
+          variables: { 
+            username:username, 
+            password: password,
+          },
+          onCompleted: ({ tokenAuth }) => {
+            localStorage.setItem(AUTH_TOKEN, tokenAuth.token);
+            
+            setTimeout(() => {whoAmI(
+              {
+                onCompleted: ({ whoami }) => {
+                  localStorage.setItem("ACTIVEUSER", whoami.id);
+                  updateActiveUser()
+                  navigate('/');
+                }
+              }
+            )}, 2000)
+          }
         }
-      }
-    )
-    setTimeout(() => {
-      if(!loginUserError && !loginUserLoading){
-        if(loginUserData){
-          localStorage.setItem("userToken", loginUserData.tokenAuth.token)
-          console.log(loginUserData.tokenAuth.token)
-        }
-      }
-    }, 1000)
+      )
+    }
+    catch(error) {
+      
+      console.log(error)
+    }
   }
+
+  // if(loginUserError){
+  //   setShowInvalidCred(true)
+  // }
   
   return (
     <BasicLayout image={bgImage}>
@@ -110,7 +122,7 @@ function Basic() {
                 label="Username" 
                 defaultValue={username}
                 onChange={e => setUsername(e.target.value)}
-                autocomplete
+                autoComplete
                 fullWidth />
             </MDBox>
             <MDBox mb={2}>
@@ -119,7 +131,7 @@ function Basic() {
                 label="Password"
                 defaultValue={password} 
                 onChange={e => setPassword(e.target.value)}
-                autocomplete
+                autoComplete
                 fullWidth 
                 />
             </MDBox>
@@ -155,6 +167,11 @@ function Basic() {
                 </MDTypography>
               </MDTypography>
             </MDBox>
+            {showInvalidCred?<MDAlert color="success" dismissible><MDTypography variant="body2" color="white">                
+                Invalid credentials, please try again.
+              </MDTypography>
+            </MDAlert>:<></>}
+            {/* <Alert color="success" dismissible>Hello</Alert> */}
           </MDBox>
         </MDBox>
       </Card>

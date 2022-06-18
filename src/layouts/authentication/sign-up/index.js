@@ -12,6 +12,8 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -32,10 +34,57 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
+
+import {CREATE_USER} from "graphql/mutations"
+
+import {WHOAMI} from "graphql/queries"
+
+import { useMutation } from "@apollo/client";
+import { AUTH_TOKEN } from "constants"
+
+import {useUser, useUpdateUser} from "UserContext"
+import { Alert } from "@mui/material";
+import MDAlert from "components/MDAlert";
+
 function Cover() {
+  const updateActiveUser = useUpdateUser()
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [password2, setPassword2] = useState("")
+  const [createUser, { data:createUserData, loading:createUserLoading, error:createUserError }] = useMutation(CREATE_USER,{
+    refetchQueries: [
+      {query: WHOAMI}, // DocumentNode object parsed with gql
+    ]},
+  );
+  const onSignUp = () => {
+    try {
+      if(password === password2){
+        createUser(
+          {   
+            variables: { 
+              username:username, 
+              email:email,
+              password: password,
+            },
+            onCompleted: ({ createUser }) => {
+              localStorage.setItem(AUTH_TOKEN, createUser.token);
+              localStorage.setItem("ACTIVEUSER", createUser.user.id);
+              updateActiveUser()
+              navigate('/');
+            }
+          }
+        )
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <CoverLayout image={bgImage}>
-      <Card>
+      <Card mb={2} className="mb-3">
         <MDBox
           variant="gradient"
           bgColor="info"
@@ -44,7 +93,7 @@ function Cover() {
           mx={2}
           mt={-3}
           p={3}
-          mb={1}
+          mb={2}
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
@@ -57,13 +106,43 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput 
+              type="text" 
+              label="Username"
+              variant="standard" 
+              defaultValue={username}
+              onChange={e => setUsername(e.target.value)}
+              autoComplete
+              fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput 
+              type="email" 
+              label="Email" 
+              variant="standard"
+              defaultValue={email}
+              onChange={e => setEmail(e.target.value)}
+              autoComplete
+              fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput 
+              defaultValue={password}
+              onChange={e => setPassword(e.target.value)}
+              type="password" 
+              label="Password" 
+              variant="standard" 
+              autoComplete
+              fullWidth />
+            </MDBox>
+            <MDBox mb={2}>
+              <MDInput 
+              defaultValue={password2}
+              onChange={e => setPassword2(e.target.value)}
+              type="password" 
+              label="Password confirm" 
+              variant="standard" 
+              fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
@@ -73,7 +152,7 @@ function Cover() {
                 color="text"
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;I agree the&nbsp;
+                &nbsp;&nbsp;I agree to the&nbsp;
               </MDTypography>
               <MDTypography
                 component="a"
@@ -87,10 +166,11 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton variant="gradient" color="info" onClick={onSignUp} fullWidth>
                 sign in
               </MDButton>
             </MDBox>
+            
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Already have an account?{" "}

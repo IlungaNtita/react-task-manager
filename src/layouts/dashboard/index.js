@@ -25,25 +25,37 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+
 
 import Sprint from "components/kanban/Sprint"
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { WHOAMI } from "graphql/queries";
+import {useUser, useUpdateUser} from "UserContext"
+import { useEffect, useState, useMemo } from "react";
 
 function Dashboard() {
-  // const [activeUser]
-  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData,  } = useQuery(WHOAMI, { errorPolicy: 'all' });
-  // if(!loading){
+  const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
+  const updateActiveUser = useUpdateUser()
+  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData, refetch  } = useQuery(WHOAMI, { 
+    errorPolicy: 'all',
+    onCompleted: ({whoami}) => {
+      localStorage.setItem("ACTIVEUSER", whoami.id)
+      console.log("ACTIVEUSER", whoami.id)
+      updateActiveUser()
+    }
+  });
 
-  // }
+  useMemo(() => {
+    refetch()
+    console.log("running", activeUser)
+    
+  },[])
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container spacing={3}>
+        {/* <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
@@ -103,15 +115,10 @@ function Dashboard() {
               />
             </MDBox>
           </Grid>
-        </Grid>
+        </Grid> */}
         <MDBox>
           <Grid container spacing={3}>
-            {/* <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
-            </Grid> */}
+            
             <Grid item xs={12} md={12} lg={12}>
               {whoAmIData && whoAmIData.whoami?
                 <Sprint sprints={whoAmIData.whoami.sprintSet}
@@ -122,7 +129,7 @@ function Dashboard() {
                     Something happened
                 </p>
                 :                    
-                <div class="loader"></div>
+                <div className="loader"></div>
             }
             </Grid>
           </Grid>

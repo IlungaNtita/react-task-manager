@@ -7,18 +7,33 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import MDSnackbar from "components/MDSnackbar";
+import { useState } from "react";
 
 import {
   useMaterialUIController,
 } from "context";
 
-const Window = ({ show, onClose, item, deleteItem }) => {
+const Window = ({ show, onClose, sprints, deleteItem }) => {
     // ui
     const [controller] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
+    const [infoSB, setInfoSB] = useState(false);
+    const openInfoSB = () => setInfoSB(true);
+    const closeInfoSB = () => setInfoSB(false);
 
+    const renderInfoSB = (
+        <MDSnackbar
+        icon="notifications"
+        title="Sprint"
+        content="Your sprint has been succesfully deleted."
+        open={infoSB}
+        onClose={closeInfoSB}
+        close={closeInfoSB}
+        />
+    );
     return (
         <div >
             <Dialog
@@ -29,21 +44,25 @@ const Window = ({ show, onClose, item, deleteItem }) => {
                 
             ><div style={darkMode ? {backgroundColor: "#313958"} : {}} >
                 <DialogTitle id="alert-dialog-title">
-                {`Delete ${item.title}`}
+                {/* {`Delete ${item.title}`} */}
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography>
+                    {/* <MDTypography variant="p" color="dark" >Are you sure you you want to delete "{item.title}"?</MDTypography> */}
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                 <MDButton onClick={onClose}>Disagree</MDButton>
-                <MDButton onClick={deleteItem} autoFocus>
+                <MDButton onClick={() => {
+                    openInfoSB();
+                    deleteItem() 
+                    }} autoFocus>
                     Agree
                 </MDButton>
                 </DialogActions>
                 </div>
             </Dialog>
+            {renderInfoSB}
         </div>
        
     );

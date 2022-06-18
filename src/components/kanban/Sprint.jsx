@@ -25,41 +25,41 @@ import sprintTableData from "./sprintTableData"
 import Window from "./sprint/Window"
 import EditWindow from "./sprint/EditWindow"
 import AddItemWindow from "./sprint/AddItemWindow"
+import { ACTIVE_SPRINT } from "constants";
 
 function Sprint({sprints}) {
     const theId = localStorage.getItem("activeSprint") || "0"
     const [controller] = useMaterialUIController();
     const { darkMode } = controller;
-    const [sprintData, setSprintData] = useState(sprints);
     const [activeSprint, setActiveSprint] = useState(theId);
     const [editableSprint, setEditableSprint] = useState();
-
+    const item = {};
     const navigate = useNavigate()
-    const handleElementClick = (itemId) => {
 
+    // Set active sprint and redirect to /tasks
+    const handleElementClick = (itemId) => {
         setActiveSprint(itemId)
-        localStorage.setItem("activeSprint", itemId)
-        // console.log("clicked", itemId)
+        localStorage.setItem(ACTIVE_SPRINT, itemId)
         navigate('/tasks');
     }
-    const onEdit = () => {
-        // using javascript spread to append todos
-        setTimeout(() => {
-            sprintUpdate({variables:{id:editableSprint}})
-        }, 1000)
-    }
+
     const onClose = () => {
         setShowDelete(false);
         setShowEdit(false);
         setShowAdd(false);
     }
     
+    // Delete sprint
     const onDelete = () => {
-        // using javascript spread to append todos
         setTimeout(() => {
             sprintDelete({variables:{id:editableSprint}})
             onClose()
         }, 1000)
+    }
+
+    function handleElementEdit(id) {
+        setShowEdit(true)
+        setEditableSprint(id)
     }
     const { columns } = sprintTableData();
     const color = "success"
@@ -125,29 +125,14 @@ function Sprint({sprints}) {
                     </MDBox>
                     ),
                     action: (
-                        <div>
-                            <MDTypography onClick={() => {setShowEdit(true); setEditableSprint(item.id)}} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="success" className="mr-2">
+                        <div key={item.id}>
+                            <MDTypography onClick={() => handleElementEdit(item.id)} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="success" className="mr-2">
                                 <Icon className="mr-1">edit</Icon>Edit
                             </MDTypography>
                             <MDTypography onClick={() => {setShowDelete(true); setEditableSprint(item.id)}} component="a" href="#" variant="caption" color="text" fontWeight="medium" color="primary">
                                 <Icon className="mr-1">delete</Icon>Delete
                             </MDTypography>
-                            <Window
-                                item={item} 
-                                onClose={onClose}
-                                show={showDelete}
-                                deleteItem={onDelete}
-                            />
-                            <EditWindow
-                                item={item} 
-                                onClose={onClose}
-                                show={showEdit}
-                            />
-                            <AddItemWindow
-                                item={item} 
-                                onClose={onClose}
-                                show={showAdd}
-                            />
+                            
                         </div>
                     
                     ),
@@ -192,7 +177,7 @@ function Sprint({sprints}) {
 
     // console.log(sprints, "from sprints")
     return (
-        <Card>
+        <div>
 
             <MDBox pt={6} pb={3}>
             <Grid container spacing={6}>
@@ -213,7 +198,7 @@ function Sprint({sprints}) {
                                 </MDTypography>
                             </MDBox>
                             <MDBox pt={3}>
-                                { sprints ?
+                                { sprints.length ?
                                 <DataTable
                                 table={{ columns, rows }}
                                 isSorted={false}
@@ -223,9 +208,11 @@ function Sprint({sprints}) {
                                 sprintData={sprints}
                                 />
                                 :
-                                <MDTypography variant="button" fontWeight="regular" color="text">
-                                    &nbsp;<strong>No sprints yet.</strong> New sprints will display here.
-                                </MDTypography>
+                                <MDBox p={3}>
+                                    <MDTypography variant="button" fontWeight="regular" color="text">
+                                        &nbsp;<strong>No sprints yet.</strong> New sprints will display here.
+                                    </MDTypography>
+                                </MDBox>
                                 }
                             </MDBox>
                         </Card>
@@ -236,14 +223,28 @@ function Sprint({sprints}) {
                 <Icon sx={{ fontWeight: "bold" }}>add</Icon>
                 &nbsp;Add Sprints
                 </MDButton>
-                <MDBox pt={2} px={2} display="flex" justifyContent="space-between" alignItems="center">
-                    <MDTypography variant="button" fontWeight="regular" color="text">
-                        &nbsp;<strong>No sprints yet.</strong> New sprints will display here.
-                    </MDTypography>
-                </MDBox>
             </MDBox>
             </MDBox>
-        </Card>
+            <Window
+                // item={item}
+                sprints={sprints}
+                onClose={onClose}
+                show={showDelete}
+                deleteItem={onDelete}
+            />
+            <EditWindow
+                // item={item}
+                sprints={sprints}
+                onClose={onClose}
+                editableItem={editableSprint}
+                show={showEdit}
+            />
+            <AddItemWindow
+                // item={item} 
+                onClose={onClose}
+                show={showAdd}
+            />
+        </div>
     );
 }
 

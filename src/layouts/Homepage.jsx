@@ -77,10 +77,11 @@ const Homepage = ({
             {!whoAmILoading && whoAmIData && whoAmIData.whoami?
             <SprintCarousel 
             sprints={whoAmIData.whoami.sprintSet} 
-            activeSprint={activeSprint} 
+            activeSprint={activeSprint}
+            key={activeSprint}
             setActiveSprint={setActiveSprint}/>
             :
-            <div class="loader mb-5"></div>}
+            <div className="loader mb-5"></div>}
                 {activeSprint !== 0?<Grid container justifyContent="center" className="mb-5" >
                     <Grid container justifyContent="center" className="mb-5" lg={10}>
                     { statuses ?
@@ -96,7 +97,8 @@ const Homepage = ({
                                         <DropWrapper onDrop={onDrop} status={s.status}>
                                             {sprintLoading?
                                             <div></div>:
-                                            <Col 
+                                            <Col
+                                            key={s.status}
                                             createTask={createTask} 
                                             setTasks={setTasks} 
                                             tasks={tasks} 
@@ -134,7 +136,7 @@ const Homepage = ({
                             )
                         })
                     :
-                    <div class="loader"></div>
+                    <div className="loader"></div>
                     }
                     </Grid>
                 </Grid>

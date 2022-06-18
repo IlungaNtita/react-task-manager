@@ -34,8 +34,10 @@ import {HTML5Backend} from "react-dnd-html5-backend";
 import { useQuery, useMutation } from "@apollo/client";
 import { SPRINT } from "../../graphql/queries";
 import { TASK_CREATE, UPDATE_TASK, DELETE_TASK, UPDATE_TASK_TIME } from "../../graphql/mutations";
+import {useUser, useUpdateUser} from "UserContext"
 
 function Tasks() {
+  const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
   const theId = localStorage.getItem("activeSprint") || 0
   const [activeSprint, setActiveSprint] = useState(theId);
   const { loading:sprintLoading, error:sprintError, data:sprintData } = useQuery(SPRINT, { 
@@ -78,7 +80,8 @@ function Tasks() {
           sprintId:activeSprint
         },
       },
-    ]},);
+    ]}
+  );
   if (sprintLoading) return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -100,7 +103,8 @@ function Tasks() {
         <Grid container spacing={3} justifyContent="center">
           <Grid item xs={12} lg={12}>
               <DndProvider backend={HTML5Backend}>
-                <Homepage 
+                <Homepage
+                  key={activeUser}
                   taskData={sprintData.sprint.taskSet} 
                   createTask={taskCreate}
                   updateTask={taskUpdate}

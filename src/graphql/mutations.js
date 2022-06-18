@@ -135,7 +135,7 @@ export const SPRINT_CREATE = gql`
             status: $status, 
             user: $user, 
         }) {
-            task{
+            sprint{
                 id
                 title
                 description
@@ -146,13 +146,13 @@ export const SPRINT_CREATE = gql`
 `;
 
 export const SPRINT_UPDATE= gql`
-    mutation TaskUpdate(
+    mutation SprintUpdate(
         $id:ID!,
         $title:String,
         $status:String,
         $description:String,
     ) {
-        taskUpdate(
+        sprintUpdate(
             id:$id 
             input: {
                 title:$title,
@@ -165,6 +165,9 @@ export const SPRINT_UPDATE= gql`
                 title
                 description
                 status
+                user{
+                    id
+                }
             }
         }
     }
@@ -185,12 +188,13 @@ export const CREATE_USER = gql`
         $email:String!,
         ) {
         createUser(username: $username, password: $password, email: $email) {
-            refreshToken
             token
             user {
+                id
                 username
             }
             profile {
+                id
                 role
             }
         }

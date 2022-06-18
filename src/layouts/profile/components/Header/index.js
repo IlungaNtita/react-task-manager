@@ -37,11 +37,22 @@ import breakpoints from "assets/theme/base/breakpoints";
 // Images
 import burceMars from "assets/images/bruce-mars.jpg";
 import backgroundImage from "assets/images/bg-profile.jpeg";
+import { Icon } from "@mui/material";
+import { useQuery } from "@apollo/client";
+import {WHOAMI} from "graphql/queries"
+import { AUTH_TOKEN } from "constants"
+import { useNavigate } from 'react-router-dom';
 
 function Header({ children }) {
+  const { loading:whoAmILoading, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
+  const navigate = useNavigate();
+
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   // const [tabValue, setTabValue] = useState(0);
-
+  const onLogout = () => {
+    localStorage.setItem(AUTH_TOKEN, "")
+    navigate("/authentication/sign-in")
+  }
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
     function handleTabsOrientation() {
@@ -62,7 +73,7 @@ function Header({ children }) {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
-  // const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+
 
   return (
     <MDBox position="relative" mb={5}>
@@ -107,34 +118,9 @@ function Header({ children }) {
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4} sx={{ ml: "auto" }}>
-            {/* <AppBar position="static">
-              <Tabs orientation={tabsOrientation} value={tabValue} onChange={handleSetTabValue}>
-                <Tab
-                  label="App"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      home
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Message"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      email
-                    </Icon>
-                  }
-                />
-                <Tab
-                  label="Settings"
-                  icon={
-                    <Icon fontSize="small" sx={{ mt: -0.25 }}>
-                      settings
-                    </Icon>
-                  }
-                />
-              </Tabs>
-            </AppBar> */}
+            <MDTypography onClick={onLogout} component="a" variant="button" color="primary" fontWeight="regular">
+              <Icon fontSize="small" className="mr-2">logout</Icon>Logout 
+            </MDTypography>
           </Grid>
         </Grid>
         {children}
