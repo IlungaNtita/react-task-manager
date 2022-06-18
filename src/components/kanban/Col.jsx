@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 
@@ -10,6 +10,7 @@ import MDButton from "components/MDButton";
 import {
   useMaterialUIController,
 } from "context";
+import MDSnackbar from "components/MDSnackbar";
 
 const Col = ({ 
     isOver,
@@ -29,7 +30,22 @@ const Col = ({
     } = controller;
 
     const className = isOver ? " highlight-region" : "";
+    const [successSB, setSuccessSB] = useState(false);
 
+    const openSuccessSB = () => setSuccessSB(true);
+    const closeSuccessSB = () => setSuccessSB(false);
+    const renderSuccessSB = (
+        <MDSnackbar
+            color="success"
+            icon="check"
+            title="Task Created"
+            content="Your task has been succesfully created."
+            open={successSB}
+            onClose={closeSuccessSB}
+            close={closeSuccessSB}
+            bgWhite
+        />
+    );
     const addTask = () => {
         createTask(
             {   variables: { 
@@ -46,8 +62,8 @@ const Col = ({
                     // const data = Object.assign(tasks, newdata);
                     setTimeout(()=>{
                         setCreated(true)
-                    }, 1000)    
-                    
+                    }, 1000)
+                    openSuccessSB()                
                 }
             }
         )
@@ -65,6 +81,7 @@ const Col = ({
                     </div>
                 </MDBox>
             </Card>
+            {renderSuccessSB}
         </div>
     );
 };

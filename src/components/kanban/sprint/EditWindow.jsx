@@ -26,8 +26,8 @@ const EditWindow = ({ show, onClose, sprints, editableItem }) => {
     const {
         darkMode,
     } = controller;
-    const [title, setTitle] = useState("")
-    const [description, setDescription] = useState("")
+    const [title, setTitle] = useState(null)
+    const [description, setDescription] = useState(null)
     const [successSB, setSuccessSB] = useState(false);
 
     const openSuccessSB = () => setSuccessSB(true);
@@ -42,10 +42,10 @@ const EditWindow = ({ show, onClose, sprints, editableItem }) => {
     // Function to edit a sprint
     const editSprint = () => {
 
-        if(title === ""){
+        if(title === "" || title === null){
             setTitle(itemData.title)
         }
-        if(description === ""){
+        if(description === "" || description === null){
             setDescription(itemData.description)
         }
             

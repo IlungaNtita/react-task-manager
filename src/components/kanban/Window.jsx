@@ -15,6 +15,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {
   useMaterialUIController,
 } from "context";
+import MDSnackbar from "components/MDSnackbar";
+import { useState } from "react";
 
 const Window = ({ show, onClose, item, setTasks, tasks, deleteTask, taskData }) => {
     // ui
@@ -22,17 +24,38 @@ const Window = ({ show, onClose, item, setTasks, tasks, deleteTask, taskData }) 
     const {
         darkMode,
     } = controller;
+    const [infoSB, setInfoSB] = useState(false);
+    const openInfoSB = () => setInfoSB(true);
+    const closeInfoSB = () => setInfoSB(false);
 
-    const onSubmit = (e) => {
+    const renderInfoSB = (
+        <MDSnackbar
+        icon="notifications"
+        title="Task"
+        content="Your task has been succesfully deleted."
+        open={infoSB}
+        onClose={closeInfoSB}
+        close={closeInfoSB}
+        />
+    );
+
+    const onSubmit = () => {
         // using javascript spread to append todos
-        e.preventDefault()
         setTimeout(() => {
-            deleteTask({variables:{id:item.id}})
+            deleteTask(
+                {
+                    variables:{id:item.id},
+                    onCompleted: () => {
+                        openInfoSB()
+                    }
+                }
+            )
             setTasks(taskData)
             setTasks(tasks.filter((element) => {
             return element.id !== item.id
         }))
         }, 1000)
+        onClose();
     }
 
     return (
@@ -54,12 +77,13 @@ const Window = ({ show, onClose, item, setTasks, tasks, deleteTask, taskData }) 
                 </DialogContent>
                 <DialogActions>
                 <MDButton onClick={onClose}>Disagree</MDButton>
-                <MDButton onClick={onSubmit} autoFocus>
-                    Agree
+                <MDButton onClick={() => {onSubmit(); openInfoSB();}} autoFocus>
+                    Delete
                 </MDButton>
                 </DialogActions>
                 </div>
             </Dialog>
+            {renderInfoSB}
         </div>
        
     );
