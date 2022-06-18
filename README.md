@@ -158,7 +158,14 @@ Focus
     ├── package.json
     └── README.md
 ```
+## Credits/Libraries:
 
+- Creative Tim (dashboard template)
+- react-avatar
+- Material UI
+- trendyol-js/react-carousel
+- redux
+- react DnD
 ## Browser Support
 
 At present, we officially aim to support the last two versions of the following browsers:

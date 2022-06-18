@@ -39,8 +39,7 @@ function Dashboard() {
   const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData, refetch  } = useQuery(WHOAMI, { 
     errorPolicy: 'all',
     onCompleted: ({whoami}) => {
-      localStorage.setItem("ACTIVEUSER", whoami.id)
-      console.log("ACTIVEUSER", whoami.id)
+      // localStorage.setItem("ACTIVEUSER", whoami.id)
       updateActiveUser()
     }
   });

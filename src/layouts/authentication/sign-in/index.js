@@ -51,7 +51,7 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [showInvalidCred, setShowInvalidCred] = useState(false)
+  let errorMessage = ""
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
   const [whoAmI, { loading:whoAmILoading, data:whoAmIData }] = useLazyQuery (WHOAMI, { errorPolicy: 'all' });
 
@@ -60,6 +60,10 @@ function Basic() {
       {query: WHOAMI}, // DocumentNode object parsed with gql
     ]},
   );
+
+  if(loginUserError){
+    errorMessage = loginUserError.message
+  }
 
   const onLogin = () => {
     try{
@@ -91,9 +95,6 @@ function Basic() {
     }
   }
 
-  // if(loginUserError){
-  //   setShowInvalidCred(true)
-  // }
   
   return (
     <BasicLayout image={bgImage}>
@@ -167,8 +168,8 @@ function Basic() {
                 </MDTypography>
               </MDTypography>
             </MDBox>
-            {showInvalidCred?<MDAlert color="success" dismissible><MDTypography variant="body2" color="white">                
-                Invalid credentials, please try again.
+            {loginUserError ?<MDAlert color="error" dismissible><MDTypography variant="body2" color="white">                
+                {errorMessage}
               </MDTypography>
             </MDAlert>:<></>}
             {/* <Alert color="success" dismissible>Hello</Alert> */}
