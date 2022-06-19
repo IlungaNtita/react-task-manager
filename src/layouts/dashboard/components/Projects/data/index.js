@@ -2,7 +2,7 @@
 /* eslint-disable react/function-component-definition */
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react

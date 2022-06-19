@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -17,11 +17,11 @@ Coded by www.creative-tim.com
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Focus React example components
+// Clocked React example components
 import TimelineItem from "examples/Timeline/TimelineItem";
 
 function OrdersOverview() {

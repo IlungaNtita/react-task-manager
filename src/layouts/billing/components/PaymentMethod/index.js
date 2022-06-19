@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -19,7 +19,7 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Tooltip from "@mui/material/Tooltip";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
@@ -28,7 +28,7 @@ import MDButton from "components/MDButton";
 import masterCardLogo from "assets/images/logos/mastercard.png";
 import visaLogo from "assets/images/logos/visa.png";
 
-// Focus React context
+// Clocked React context
 import { useMaterialUIController } from "context";
 
 function PaymentMethod() {

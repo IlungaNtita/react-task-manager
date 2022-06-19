@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -14,9 +14,9 @@ Coded by www.creative-tim.com
 */
 
 /**
- * The base breakpoints for the Focus PRO React.
+ * The base breakpoints for the Clocked PRO React.
  * You can add new breakpoints using this file.
- * You can customized the breakpoints for the entire Focus PRO React using thie file.
+ * You can customized the breakpoints for the entire Clocked PRO React using thie file.
  */
 
 const breakpoints = {

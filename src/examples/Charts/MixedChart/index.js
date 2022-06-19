@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -25,17 +25,17 @@ import { Line } from "react-chartjs-2";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
-// Focus React helper functions
+// Clocked React helper functions
 import gradientChartLine from "assets/theme/functions/gradientChartLine";
 
 // MixedChart configurations
 import configs from "examples/Charts/MixedChart/configs";
 
-// Focus React base styles
+// Clocked React base styles
 import colors from "assets/theme/base/colors";
 
 function MixedChart({ icon, title, description, height, chart }) {

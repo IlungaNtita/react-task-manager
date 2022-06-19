@@ -82,7 +82,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                 }
             )
 
-            console.log(titleInput, "titleInput", item.id, "item title", item.title)
             setUpdated(false)
             setToggle(true)
         }, 2000)
@@ -102,10 +101,11 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
     const onClose = () => setShow(false);
 
     drag(drop(ref));
+
+    let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`)) || {minutes:item.minutes, hours: item.hours, seconds: item.seconds}
     
     useEffect(() => {
         if(item){
-            let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
             if((item && item.status === "Done" && localTask) && (localTask.minutes || localTask.seconds || localTask.hours) )	{
                 let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
                 setTimeout(() => {
@@ -122,8 +122,8 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                     console.log("Done worked", taskData)
                 }, 1500)
             }
-            else if((item && item.status === "In Progress" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
-                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
+            else if(item && item.status === "In Progress" && localTask ){
+                // let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
                 updateTaskTime(
                     {
                         variables: {
@@ -139,7 +139,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                 console.log("In Progress worked", taskData)
             }
             else if((item && item.status === "To Do" && localTask ) && (localTask.minutes || localTask.seconds || localTask.hours))	{
-                let localTask = JSON.parse(localStorage.getItem(`task_${item.id}`))
                 updateTaskTime(
                     {
                         variables: {
@@ -217,7 +216,6 @@ const Item = ({ item, index, moveItem, status, setTasks, tasks,
                             item={item} 
                             tasks={tasks} 
                             setTasks={setTasks} 
-                            key={item.id}
                             onClose={onClose}
                             show={show}
                             deleteTask={deleteTask}

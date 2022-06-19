@@ -32,3 +32,58 @@ export const TASK = gql`
   }
 `;
 
+export const WHOAMI = gql`
+  query whoami {
+    whoami{
+      id
+      username
+      sprintSet{
+        id
+        title
+        description
+        status
+        createdAt
+        updatedAt
+        status
+      }
+    }
+  }
+`
+
+export const ALL_SPRINT = gql`
+  query allSprints {
+    allSprints{
+      id
+      title
+      description
+      status
+      createdAt
+      updatedAt
+      status
+    }
+  }
+`
+
+export const SPRINT = gql`
+  query sprint($sprintId: Int) {
+    sprint(sprintId: $sprintId){
+      id
+      title
+      description
+      status
+      createdAt
+      updatedAt
+      status
+      taskSet {
+        id
+        title
+        description
+        status
+        hours
+        minutes
+        seconds
+        icon
+      }
+    }
+  }
+`

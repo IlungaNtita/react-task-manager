@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -28,10 +28,10 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 
-// Focus React example components
+// Clocked React example components
 import Breadcrumbs from "examples/Breadcrumbs";
 import NotificationItem from "examples/Items/NotificationItem";
 
@@ -44,12 +44,15 @@ import {
   navbarMobileMenu,
 } from "examples/Navbars/DashboardNavbar/styles";
 
-// Focus React context
+// Clocked React context
 import {
   useMaterialUIController,
   setTransparentNavbar,
   setMiniSidenav,
 } from "context";
+import Avatar from 'react-avatar';
+import {WHOAMI} from "graphql/queries"
+import { useQuery } from "@apollo/client";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -57,6 +60,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const { loading:whoAmILoading, data:whoAmIData } = useQuery(WHOAMI, { errorPolicy: 'all' });
 
   useEffect(() => {
     // Setting the navbar type
@@ -134,7 +138,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
             <MDBox color={light ? "white" : "inherit"}>
               <Link to="/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
+                  {!whoAmILoading ?
+                  <Avatar name={whoAmIData.whoami.username} size="20" style={{fontSize: "50px"}}  round={true}/>:
                   <Icon sx={iconsStyle}>account_circle</Icon>
+                  }
                 </IconButton>
               </Link>
               <IconButton

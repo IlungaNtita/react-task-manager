@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -21,10 +21,10 @@ import { useLocation } from "react-router-dom";
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 
-// Focus React context
+// Clocked React context
 import { useMaterialUIController, setLayout } from "context";
 
 function DashboardLayout({ children }) {

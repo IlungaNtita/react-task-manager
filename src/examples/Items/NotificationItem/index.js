@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -22,7 +22,7 @@ import PropTypes from "prop-types";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 

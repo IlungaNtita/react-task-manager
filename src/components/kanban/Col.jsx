@@ -1,37 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
-// Focus React context
+// Clocked React context
 import {
   useMaterialUIController,
 } from "context";
+import MDSnackbar from "components/MDSnackbar";
 
-const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
-    // ui
+const Col = ({ 
+    isOver,
+    children, 
+    createTask, 
+    setTasks, 
+    taskData,
+    activeSprint,
+    tasks,
+    created,
+    setCreated,
+ }) => {
+    // UI 
     const [controller,] = useMaterialUIController();
     const {
         darkMode,
     } = controller;
 
     const className = isOver ? " highlight-region" : "";
+    const [successSB, setSuccessSB] = useState(false);
 
+    const openSuccessSB = () => setSuccessSB(true);
+    const closeSuccessSB = () => setSuccessSB(false);
+    const renderSuccessSB = (
+        <MDSnackbar
+            color="success"
+            icon="check"
+            title="Task Created"
+            content="Your task has been succesfully created."
+            open={successSB}
+            onClose={closeSuccessSB}
+            close={closeSuccessSB}
+            bgWhite
+        />
+    );
     const addTask = () => {
         createTask(
             {   variables: { 
                     title:"New task (Double click to edit)", 
                     description: "",
                     status: "To Do",
-                    icon: "⭕️"
-                } 
+                    icon: "⭕️",
+                    hours:0,
+                    minutes:0,
+                    seconds:0,
+                    taskSprint: activeSprint
+                },
+                onCompleted: () => {
+                    // const data = Object.assign(tasks, newdata);
+                    setTimeout(()=>{
+                        setCreated(true)
+                    }, 1000)
+                    openSuccessSB()                
+                }
             }
         )
-        console.log(taskData)
-        setTasks(taskData)
     }
 
     return (
@@ -46,6 +81,7 @@ const Col = ({ isOver, children, createTask, setTasks, tasks, taskData }) => {
                     </div>
                 </MDBox>
             </Card>
+            {renderSuccessSB}
         </div>
     );
 };

@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -19,18 +19,24 @@ import PropTypes from "prop-types";
 // @mui material components
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 
-// Focus React context
+// Clocked React context
 import { useMaterialUIController } from "context";
+import { useNavigate } from 'react-router-dom';
 
-function Bill({ name, company, email, vat, noGutter }) {
+function Bill({ name, company, email, vat, noGutter, description, status, deleteItem, editItem, itemId }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-
+  const navigate = useNavigate()
+  // const handleElementClick = () => {
+  //   localStorage.setItem("activeSprint", itemId)
+  //   console.log("clicked", itemId)
+  //   navigate('/tasks');
+  // }
   return (
     <MDBox
       component="li"
@@ -42,6 +48,7 @@ function Bill({ name, company, email, vat, noGutter }) {
       p={3}
       mb={noGutter ? 0 : 1}
       mt={2}
+      
     >
       <MDBox width="100%" display="flex" flexDirection="column">
         <MDBox
@@ -57,36 +64,29 @@ function Bill({ name, company, email, vat, noGutter }) {
 
           <MDBox display="flex" alignItems="center" mt={{ xs: 2, sm: 0 }} ml={{ xs: -1.5, sm: 0 }}>
             <MDBox mr={1}>
-              <MDButton variant="text" color="error">
+              <MDButton variant="text" color="primary" onClick={handleElementClick}>
+                <Icon>view</Icon>&nbsp;view tasks
+              </MDButton>
+            </MDBox>
+            <MDBox mr={1}>
+              <MDButton variant="text" color="error" onClick={deleteItem}>
                 <Icon>delete</Icon>&nbsp;delete
               </MDButton>
             </MDBox>
-            <MDButton variant="text" color={darkMode ? "white" : "dark"}>
+            <MDButton variant="text" color={darkMode ? "white" : "dark"} onClick={editItem}>
               <Icon>edit</Icon>&nbsp;edit
             </MDButton>
           </MDBox>
         </MDBox>
+        
         <MDBox mb={1} lineHeight={0}>
-          <MDTypography variant="caption" color="text">
-            Company Name:&nbsp;&nbsp;&nbsp;
-            <MDTypography variant="caption" fontWeight="medium" textTransform="capitalize">
-              {company}
-            </MDTypography>
+          <MDTypography style={{size:30}} variant="h6" color="text">
+            &nbsp;&nbsp;&nbsp;
+              {description}
           </MDTypography>
         </MDBox>
-        <MDBox mb={1} lineHeight={0}>
-          <MDTypography variant="caption" color="text">
-            Email Address:&nbsp;&nbsp;&nbsp;
-            <MDTypography variant="caption" fontWeight="medium">
-              {email}
-            </MDTypography>
-          </MDTypography>
-        </MDBox>
-        <MDTypography variant="caption" color="text">
-          VAT Number:&nbsp;&nbsp;&nbsp;
-          <MDTypography variant="caption" fontWeight="medium">
-            {vat}
-          </MDTypography>
+        <MDTypography variant="caption">
+          {status}
         </MDTypography>
       </MDBox>
     </MDBox>
@@ -99,12 +99,6 @@ Bill.defaultProps = {
 };
 
 // Typechecking props for the Bill
-Bill.propTypes = {
-  name: PropTypes.string.isRequired,
-  company: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  vat: PropTypes.string.isRequired,
-  noGutter: PropTypes.bool,
-};
+
 
 export default Bill;

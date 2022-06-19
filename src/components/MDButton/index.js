@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus PRO React - v1.0.0
+* Clocked PRO React - v1.0.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-react
@@ -21,7 +21,7 @@ import PropTypes from "prop-types";
 // Custom styles for MDButton
 import MDButtonRoot from "components/MDButton/MDButtonRoot";
 
-// Focus React contexts
+// Clocked React contexts
 import { useMaterialUIController } from "context";
 
 const MDButton = forwardRef(

@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -29,7 +29,7 @@ import Icon from "@mui/material/Icon";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
@@ -37,7 +37,7 @@ import MDButton from "components/MDButton";
 // Custom styles for the Configurator
 import ConfiguratorRoot from "examples/Configurator/ConfiguratorRoot";
 
-// Focus React context
+// Clocked React context
 import {
   useMaterialUIController,
   setOpenConfigurator,
@@ -137,7 +137,7 @@ function Configurator() {
         px={3}
       >
         <MDBox>
-          <MDTypography variant="h5">Focus UI Configurator</MDTypography>
+          <MDTypography variant="h5">Clocked UI Configurator</MDTypography>
           <MDTypography variant="body2" color="text">
             Customize your dashboard.
           </MDTypography>

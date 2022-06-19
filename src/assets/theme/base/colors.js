@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -14,9 +14,9 @@ Coded by www.creative-tim.com
 */
 
 /**
- * The base colors for the Focus PRO React.
+ * The base colors for the Clocked PRO React.
  * You can add new color using this file.
- * You can customized the colors for the entire Focus PRO React using thie file.
+ * You can customized the colors for the entire Clocked PRO React using thie file.
  */
 
 const colors = {

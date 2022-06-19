@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -16,33 +16,45 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 
-// Focus React example components
+// Clocked React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-// Data
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 
-// Dashboard components
-import Projects from "layouts/dashboard/components/Projects";
-import OrdersOverview from "layouts/dashboard/components/OrdersOverview";
+
+import Sprint from "components/kanban/Sprint"
+import { useQuery } from "@apollo/client";
+import { WHOAMI } from "graphql/queries";
+import {useUser, useUpdateUser} from "UserContext"
+import { useEffect, useState, useMemo } from "react";
 
 function Dashboard() {
-  const { sales, tasks } = reportsLineChartData;
+  const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
+  const updateActiveUser = useUpdateUser()
+  const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData, refetch  } = useQuery(WHOAMI, { 
+    errorPolicy: 'all',
+    onCompleted: ({whoami}) => {
+      // localStorage.setItem("ACTIVEUSER", whoami.id)
+      updateActiveUser()
+    }
+  });
 
+  useMemo(() => {
+    refetch()
+    console.log("running", activeUser)
+    
+  },[])
+  
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox py={3}>
-        <Grid container spacing={3}>
+        {/* <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <ComplexStatisticsCard
@@ -102,55 +114,22 @@ function Dashboard() {
               />
             </MDBox>
           </Grid>
-        </Grid>
-        <MDBox mt={4.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsBarChart
-                  color="info"
-                  title="website views"
-                  description="Last Campaign Performance"
-                  date="campaign sent 2 days ago"
-                  chart={reportsBarChartData}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="daily sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="completed tasks"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
+        </Grid> */}
         <MDBox>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={8}>
-              <Projects />
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <OrdersOverview />
+            
+            <Grid item xs={12} md={12} lg={12}>
+              {whoAmIData && whoAmIData.whoami?
+                <Sprint sprints={whoAmIData.whoami.sprintSet}
+                />
+              :
+                whoAmIError ? 
+                <p>
+                    Something happened
+                </p>
+                :                    
+                <div className="loader"></div>
+            }
             </Grid>
           </Grid>
         </MDBox>

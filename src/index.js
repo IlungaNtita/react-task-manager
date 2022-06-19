@@ -7,7 +7,7 @@ import "./style/index.css";
 import { Provider } from 'react-redux'
 import store from './store'
 
-// Focus React Context Provider
+// Clocked React Context Provider
 import { MaterialUIControllerProvider } from "context";
 
 // Apollo client for graphQL
@@ -15,10 +15,30 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
+  createHttpLink
 } from "@apollo/client";
 
-const client = new ApolloClient({
+import { setContext } from '@apollo/client/link/context';
+import { AUTH_TOKEN } from "constants";
+
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem(AUTH_TOKEN);
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `JWT ${token}` : "",
+    }
+  }
+});
+
+const httpLink = createHttpLink({
   uri: 'http://localhost:8000/graphql',
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache()
 });
 
