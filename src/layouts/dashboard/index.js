@@ -25,16 +25,18 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
-
-
 import Sprint from "components/kanban/Sprint"
 import { useQuery } from "@apollo/client";
 import { WHOAMI } from "graphql/queries";
 import {useUser, useUpdateUser} from "UserContext"
 import { useEffect, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { ACTIVEUSER } from "constants";
+import { AUTH_TOKEN } from "constants";
 
 function Dashboard() {
-  const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
+  const navigate = useNavigate()
+  const [activeUser, setActiveUser] = useState(localStorage.getItem(ACTIVEUSER))
   const updateActiveUser = useUpdateUser()
   const { loading:whoAmILoading, error:whoAmIError, data:whoAmIData, refetch  } = useQuery(WHOAMI, { 
     errorPolicy: 'all',
@@ -43,6 +45,10 @@ function Dashboard() {
       updateActiveUser()
     }
   });
+
+  if(!localStorage.getItem(AUTH_TOKEN)){
+    navigate("/authentication/sign-in")
+  }
 
   useMemo(() => {
     refetch()

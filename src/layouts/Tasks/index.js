@@ -35,9 +35,16 @@ import { useQuery, useMutation } from "@apollo/client";
 import { SPRINT } from "../../graphql/queries";
 import { TASK_CREATE, UPDATE_TASK, DELETE_TASK, UPDATE_TASK_TIME } from "../../graphql/mutations";
 import {useUser, useUpdateUser} from "UserContext"
+import { ACTIVEUSER } from "constants";
+import { useNavigate } from "react-router-dom";
+import { AUTH_TOKEN } from "constants";
 
 function Tasks() {
-  const [activeUser, setActiveUser] = useState(localStorage.getItem("ACTIVEUSER"))
+  const navigate = useNavigate()
+  if(!localStorage.getItem(AUTH_TOKEN)){
+    navigate("/authentication/sign-in")
+  }
+  const [activeUser, setActiveUser] = useState(localStorage.getItem(ACTIVEUSER))
   const theId = localStorage.getItem("activeSprint") || 0
   const [activeSprint, setActiveSprint] = useState(theId);
   const { loading:sprintLoading, error:sprintError, data:sprintData, refetch } = useQuery(SPRINT, { 

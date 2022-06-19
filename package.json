@@ -2,19 +2,10 @@
   "name": "clocked",
   "version": "2.1.0",
   "private": true,
-  "author": "Creative Tim",
-  "license": "See license in https://www.creative-tim.com/license",
-  "description": "React version of Clocked by Creative Tim",
+  "author": "Ilunga Ntita",
+  "description": "Clocked by Ilunga Ntita, a time tracking app for creating tasks and managing time.",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/material-dashboard-react.git"
-  },
-  "engines": {
-    "node": "14 || 15 || 16",
-    "npm": ">=6"
+    "url": "https://github.com/IlungaNtita/react-task-manager/issues"
   },
   "dependencies": {
     "@apollo/client": "^3.6.2",
@@ -78,5 +69,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "16.14.0",
+    "npm": "8.5.5"
   }
 }
