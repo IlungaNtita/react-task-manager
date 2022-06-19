@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -14,15 +14,15 @@ Coded by www.creative-tim.com
 */
 
 /**
- * The base typography styles for the Focus PRO React.
+ * The base typography styles for the Clocked PRO React.
  * You can add new typography style using this file.
- * You can customized the typography styles for the entire Focus PRO React using thie file.
+ * You can customized the typography styles for the entire Clocked PRO React using thie file.
  */
 
-// Focus React Base Styles
+// Clocked React Base Styles
 import colors from "assets/theme/base/colors";
 
-// Focus React Helper Functions
+// Clocked React Helper Functions
 import pxToRem from "assets/theme/functions/pxToRem";
 
 const { dark } = colors;

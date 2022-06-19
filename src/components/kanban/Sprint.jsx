@@ -1,7 +1,7 @@
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";

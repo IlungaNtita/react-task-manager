@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -23,25 +23,25 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 
-// Focus React example components
+// Clocked React example components
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
 
-// Focus React themes
+// Clocked React themes
 import theme from "assets/theme";
 // import themeRTL from "assets/theme/theme-rtl";
 
-// Focus React Dark Mode themes
+// Clocked React Dark Mode themes
 import themeDark from "assets/theme-dark";
 // import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
-// Focus React routes
+// Clocked React routes
 import routes from "routes";
 
-// Focus React contexts
+// Clocked React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
@@ -149,7 +149,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Focus"
+              brandName="Clocked"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}

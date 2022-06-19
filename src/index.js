@@ -7,7 +7,7 @@ import "./style/index.css";
 import { Provider } from 'react-redux'
 import store from './store'
 
-// Focus React Context Provider
+// Clocked React Context Provider
 import { MaterialUIControllerProvider } from "context";
 
 // Apollo client for graphQL

@@ -1,6 +1,6 @@
 // import Modal from "react-modal";
 import MDButton from "components/MDButton";
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 // @mui material components
 import Card from "@mui/material/Card";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 
-// Focus React context
+// Clocked React context
 import {
   useMaterialUIController,
 } from "context";

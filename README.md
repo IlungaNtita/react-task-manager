@@ -1,13 +1,13 @@
-# [Focus React](http://demos.creative-tim.com/material-dashboard-react/#/dashboard?ref=readme-mdr)
+# [Clocked React](http://demos.creative-tim.com/material-dashboard-react/#/dashboard?ref=readme-mdr)
 
 ![version](https://img.shields.io/badge/version-2.1.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/material-dashboard-react.svg)](https://github.com/creativetimofficial/material-dashboard-react/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/material-dashboard-react.svg)](https://github.com/creativetimofficial/material-dashboard-react/issues?q=is%3Aissue+is%3Aclosed)
 
 <!-- ![Image](https://s3.amazonaws.com/creativetim_bucket/products/71/original/material-dashboard-react.jpg?1638950990) -->
 
-Focus React is a task manager applicacion that allows user to record time on their tasks, this allow users to manage their time more efficiently and get more work done.
+Clocked React is a task manager applicacion that allows user to record time on their tasks, this allow users to manage their time more efficiently and get more work done.
 
 <!-- **Fully Coded Elements**
-Focus React is built with over 70 frontend individual elements, like buttons, inputs, navbars, nav tabs, cards, or alerts, giving you the freedom of choosing and combining. All components can take variations in color, which you can easily modify using MUI styled() API and sx prop. You will save a lot of time going from prototyping to full-functional code because all elements are implemented.
+Clocked React is built with over 70 frontend individual elements, like buttons, inputs, navbars, nav tabs, cards, or alerts, giving you the freedom of choosing and combining. All components can take variations in color, which you can easily modify using MUI styled() API and sx prop. You will save a lot of time going from prototyping to full-functional code because all elements are implemented.
 
 This free MUI & React Dashboard is coming with prebuilt design blocks, so the development process is seamless,
 switching from our pages to the real website is very easy to be done. -->
@@ -90,7 +90,7 @@ Quick start options:
 Within the download you'll find the following directories and files:
 
 ```
-Focus
+Clocked
     ├── public
     │   ├── apple-icon.png
     │   ├── favicon.png

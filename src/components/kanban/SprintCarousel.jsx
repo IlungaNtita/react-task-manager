@@ -1,4 +1,4 @@
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { useState } from "react";

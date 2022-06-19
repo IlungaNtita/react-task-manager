@@ -1,6 +1,6 @@
 /**
 =========================================================
-* Focus React - v2.1.0
+* Clocked React - v2.1.0
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -25,17 +25,17 @@ import { Radar } from "react-chartjs-2";
 import Card from "@mui/material/Card";
 import Icon from "@mui/material/Icon";
 
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // RadarChart configurations
 import configs from "examples/Charts/RadarChart/configs";
 
-// Focus React base styles
+// Clocked React base styles
 import colors from "assets/theme/base/colors";
 
-// Focus React helper functions
+// Clocked React helper functions
 import rgba from "assets/theme/functions/rgba";
 
 function RadarChart({ icon, title, description, chart }) {

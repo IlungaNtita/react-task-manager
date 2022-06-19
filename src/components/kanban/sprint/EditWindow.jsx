@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// Focus React components
+// Clocked React components
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import {
